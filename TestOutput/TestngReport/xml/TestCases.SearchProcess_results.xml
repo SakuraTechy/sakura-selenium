@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="谷歌-搜索自动化测试系统流程"
+           tests="2"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="9.314">
+  <properties />
+  
+  
+            <testcase name="case2" time="7.864" classname="TestCases.SearchProcess" />
+                <testcase name="case1" time="1.450" classname="TestCases.SearchProcess" />
+      
+</testsuite>

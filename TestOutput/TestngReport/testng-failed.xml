@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test verbose="2" name="Default test">
+<suite thread-count="50" configfailurepolicy="continue" name="Failed suite [Selenium测试报告]" parallel="tests">
+  <parameter name="browser" value="firefox"/>
+  <parameter name="profile" value="false"/>
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test thread-count="50" verbose="3" name="谷歌-搜索自动化测试系统流程" time-out="60000">
+    <parameter name="browser" value="chrome"/>
+    <parameter name="profile" value="false"/>
     <classes>
-      <class name="TestCases.SearchProcess"/>
+      <class name="TestCases.SearchProcess">
+        <methods>
+          <include name="case1"/>
+          <include name="case2"/>
+          <exclude name="Precondition"/>
+          <exclude name=""/>
+        </methods>
+      </class> <!-- TestCases.SearchProcess -->
     </classes>
-  </test> <!-- Default test -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- 谷歌-搜索自动化测试系统流程 -->
+  <test thread-count="50" verbose="3" name="火狐-搜索自动化测试系统流程" time-out="60000">
+    <parameter name="browser" value="firefox"/>
+    <parameter name="profile" value="false"/>
+    <classes>
+      <class name="TestCases.SearchProcess">
+        <methods>
+          <include name="case1"/>
+          <include name="case2"/>
+          <exclude name="Precondition"/>
+          <exclude name=""/>
+        </methods>
+      </class> <!-- TestCases.SearchProcess -->
+    </classes>
+  </test> <!-- 火狐-搜索自动化测试系统流程 -->
+</suite> <!-- Failed suite [Selenium测试报告] -->

@@ -1,4 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -11,8 +14,12 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    </properties>
   
   <dependencies>
         <!-- Testng  -->
@@ -21,7 +28,31 @@
             <artifactId>testng</artifactId>
             <version>6.9.10</version>
         </dependency>
-        
+
+        <!-- Junit  -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <!-- Selenium -->
+        <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server-standalone</artifactId>
+            <version>2.53.0</version>
+        </dependency>
+
         <!-- Java-Client -->
         <dependency>
             <groupId>io.appium</groupId>
@@ -29,38 +60,27 @@
             <version>3.3.0</version>
         </dependency>
         
-        <!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>2.53.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>2.53.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server-standalone</artifactId>
-            <version>2.53.0</version>
-        </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <!-- rest-assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>3.0.5</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>2.0</version>
+        </dependency>
+        
         <!--jsonschema相关-->
         <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>2.8.0</version>
         </dependency>
-        
+
         <!-- ExtentReport -->
         <dependency>
             <groupId>com.relevantcodes</groupId>
@@ -87,7 +107,7 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.3.0</version>
         </dependency>
-        
+
         <!-- TestngReport -->
         <dependency>
             <groupId>org.uncommons</groupId>
@@ -104,34 +124,34 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
-        
+
         <!-- Excel  -->
         <dependency>
             <groupId>jexcelapi</groupId>
             <artifactId>jxl</artifactId>
             <version>2.6</version>
         </dependency>
-        
+
         <!-- DataBase-Oracle -->
         <dependency>
             <groupId>com.github.noraui</groupId>
             <artifactId>ojdbc7</artifactId>
             <version>12.1.0.2</version>
         </dependency>
-        
+
         <!-- DataBase-MySql -->
         <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.44</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.44</version>
         </dependency>
 
         <dependency>
-        <groupId>com.jcraft</groupId>
-        <artifactId>jsch</artifactId>
-        <version>0.1.54</version>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
         </dependency>
-        
+
         <!-- Log4j  -->
         <dependency>
             <groupId>log4j</groupId>
@@ -147,13 +167,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.6</version>
-        </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>2.0</version>
         </dependency>
   </dependencies>
   

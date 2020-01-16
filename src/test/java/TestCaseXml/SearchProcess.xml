@@ -11,7 +11,7 @@
 	    id="case1"
 	    name="验证在浏览器中，输入百度网站域名后，可以正常访问">
 	  	<step action="web-geturl" value="https://www.baidu.com/" desc="访问百度网站"/>
-		  <step action="web-check" locator="xpath=.//*[@id='su']" expect="" message="访问失败(实际结果和预期结果不一致)" caseid="case1" desc="检查在浏览器中，输入百度网站域名后，可以正常访问"/>
+		<step action="web-check" locator="xpath=.//*[@id='su']" expect="" message="访问失败(实际结果和预期结果不一致)" caseid="case1" desc="检查在浏览器中，输入百度网站域名后，可以正常访问"/>
 	</case>
 
 	<case

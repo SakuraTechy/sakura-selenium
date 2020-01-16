@@ -2,9 +2,12 @@ package com.jmoney.luckeylink.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.jmoney.luckeylink.service.WebXmlParseService;
+
 import io.appium.java_client.android.AndroidDriver;
 
-public class TestBase {
+public class TestBase  extends WebXmlParseService {
 	
 	private String id;
 
@@ -41,7 +44,8 @@ public class TestBase {
     }
     
     public WebDriver getWebDriver() {
-        return Wdriver;
+    	Wdriver = WebXmlParseService.ThreadDriver.get();
+    	return Wdriver;
     }
 
     public void setWebDriver(WebDriver driver) {

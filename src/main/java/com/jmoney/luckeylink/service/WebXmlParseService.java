@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.slf4j.Logger;
@@ -41,29 +43,82 @@ import com.jmoney.luckeylink.util.Constants;
  * @version 1.0
  * @since   1.0
  */
+ @SuppressWarnings("unused")
 public class WebXmlParseService {
-
-	@SuppressWarnings("unused")
 	private static final Logger LOG = LoggerFactory.getLogger(WebXmlParseService.class);
 
-	public static WebDriver driver;
-	
+	public static  WebDriver driver;
+	public static  ThreadLocal<WebDriver> ThreadDriver = new ThreadLocal<WebDriver>() ;
+
 	/**
 	 * <br>火狐浏览器配置</br>
 	 *
 	 * @throws Exception
 	 */
+	//【Selenium2.53.0 --> Firefox47.0.1】版本
 	public static void FirefoxDriver(){
+		//通过指定浏览器路径启动，默认不加载用户个人配置
 		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin", Constants.CONFIG_COMMON)); 
 		driver = new FirefoxDriver();
-		driver .manage().window().maximize();//全屏
+//		driver .manage().window().maximize();//全屏
 	}
 	
+	//【Selenium2.53.0 --> Firefox47.0.1】版本
 	public static void AppointFirefoxDriver(){
-		File file = new File(ConfigUtil.getProperty("webdriver.profile", Constants.CONFIG_COMMON));
- 	    FirefoxProfile profile = new FirefoxProfile(file);        
- 	    driver = new FirefoxDriver(profile);
- 	    driver .manage().window().maximize();//全屏
+		//通过指定浏览器路径启动，加载用户个人配置
+		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin", Constants.CONFIG_COMMON)); 
+		File file = new File(ConfigUtil.getProperty("webdriver.firefox.profile", Constants.CONFIG_COMMON));
+		FirefoxProfile profile = new FirefoxProfile(file);   
+// 	    driver = new FirefoxDriver(profile); //使用旧版Selenium2.53.0，去掉注释，不需要设置FirefoxOptions，新版Selenium3.11.0^需要设置FirefoxOptions
+// 	    driver .manage().window().maximize();//全屏
+	}
+	
+	//【Selenium3.11.0^ --> Firefox47.0.1】版本
+	public static void FirefoxMarionette(){
+		//通过marionette获取geckodriver路径启动旧版火狐浏览器，默认不加载用户个人配置
+		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin", Constants.CONFIG_COMMON)); 
+		System.setProperty("webdriver.firefox.marionette", ConfigUtil.getProperty("webdriver.gecko.driver", Constants.CONFIG_COMMON));
+        driver = new FirefoxDriver();
+//		driver .manage().window().maximize();//全屏
+	}	
+	
+	//【Selenium3.11.0^ --> Firefox47.0.1】版本
+	public static void AppointFirefoxMarionette(){
+		//通过marionette获取geckodriver路径启动旧版火狐浏览器，加载用户个人配置
+		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin", Constants.CONFIG_COMMON)); 
+		System.setProperty("webdriver.firefox.marionette", ConfigUtil.getProperty("webdriver.gecko.driver", Constants.CONFIG_COMMON));
+		//FirefoxOptions设置Webdriver启动firefox为默认用户的配置信息（包括书签、扩展程序等）
+ 	    FirefoxOptions options = new FirefoxOptions();
+		File file = new File(ConfigUtil.getProperty("webdriver.firefox.profile", Constants.CONFIG_COMMON));
+	    FirefoxProfile profile = new FirefoxProfile(file);   
+ 	    options.setProfile(profile);
+        driver = new FirefoxDriver(options);
+//		driver .manage().window().maximize();//全屏
+	}		
+		
+	//【Selenium3.11.0^ --> Firefox72.0.1^】版本
+	public static void FirefoxGeckoDriver(){
+		//通过获取geckodriver路径启动火狐浏览器，默认不加载用户个人配置
+		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin1", Constants.CONFIG_COMMON)); 
+		System.setProperty("webdriver.gecko.driver", ConfigUtil.getProperty("webdriver.gecko.driver", Constants.CONFIG_COMMON));
+		driver = new FirefoxDriver();
+//		driver .manage().window().maximize();//全屏
+	}
+	
+	//【Selenium3.11.0^ --> Firefox72.0.1^】版本
+	public static void AppointFirefoxGeckoDriver(){
+		//通过获取浏览器和geckodriver的路径启动火狐浏览器，加载用户个人配置
+		System.setProperty("webdriver.firefox.bin", ConfigUtil.getProperty("webdriver.firefox.bin1", Constants.CONFIG_COMMON)); 
+		System.setProperty("webdriver.gecko.driver", ConfigUtil.getProperty("webdriver.gecko.driver", Constants.CONFIG_COMMON));
+		//FirefoxOptions设置Webdriver启动firefox为默认用户的配置信息（包括书签、扩展程序等）
+ 	    FirefoxOptions options = new FirefoxOptions();
+		// 	    ProfilesIni pi = new ProfilesIni();
+// 	    FirefoxProfile profile = pi.getProfile("default-release"); //个人配置文件名称
+ 	    File file = new File(ConfigUtil.getProperty("webdriver.firefox.profile1", Constants.CONFIG_COMMON));
+	    FirefoxProfile profile = new FirefoxProfile(file);   
+ 	    options.setProfile(profile);
+        driver = new FirefoxDriver(options);
+// 	    driver.manage().window().maximize();//全屏
 	}
 	
 	/**
@@ -71,60 +126,61 @@ public class WebXmlParseService {
 	 *
 	 * @throws Exception
 	 */
+	//【Chromedriver v2.41 --> Chrome v64-66^】版本
 	public static void ChromeDriver(){
+		//通过获取chromedriver路径启动谷歌浏览器，默认不加载用户个人配置
+		System.setProperty("webdriver.chrome.bin", ConfigUtil.getProperty("webdriver.chrome.bin", Constants.CONFIG_COMMON)); 
 		System.setProperty("webdriver.chrome.driver", ConfigUtil.getProperty("webdriver.chrome.driver", Constants.CONFIG_COMMON)); 
-		driver = new ChromeDriver();
+        driver = new ChromeDriver();
+//		driver .manage().window().maximize();//全屏
+	}
+	
+	//【Chromedriver v2.41 --> Chrome v64-66^】版本
+	public static void AppointChromeDriver(){
+		//通过获取chromedriver路径启动谷歌浏览器，加载用户个人配置
+		System.setProperty("webdriver.chrome.bin", ConfigUtil.getProperty("webdriver.chrome.bin", Constants.CONFIG_COMMON)); 
+		System.setProperty("webdriver.chrome.driver", ConfigUtil.getProperty("webdriver.chrome.driver", Constants.CONFIG_COMMON)); 
+
+        //ChromeOptions设置Webdriver启动chrome为默认用户的配置信息（包括书签、扩展程序等）
+        ChromeOptions option = new ChromeOptions();
+        //通过ChromeOptions的setExperimentalOption方法，传下面两个参数来禁止掉谷歌受自动化控制的信息栏
+        option.setExperimentalOption("useAutomationExtension", false);
+        option.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        //chrome://version/中的对应个人资料路径
+        option.addArguments("user-data-dir="+ConfigUtil.getProperty("webdriver.chrome.profile", Constants.CONFIG_COMMON)+""); 
+        driver = new ChromeDriver(option);
 //		driver .manage().window().maximize();//全屏
 	}
 
 	/**
-	 * <br>根据用例的名称，截取图片，进行保存</br>
-	 *
-	 * @param ScreenshotName
-	 */
-	@SuppressWarnings("unused")
-	public static void screenShot(String CaseID) {
-
-		int t = 1;
-		String AppointDir = System.getProperty("user.dir")+"\\TestOutput\\ExtentReport\\BugScreenshot\\";
-		String picture = AppointDir + CaseID + ".png";
-
-		File file = new File(AppointDir);
-		File[] fs = file.listFiles();
-		File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
-		// 指定图片数量，过多删除
-		try {
-			if (fs.length >= 300) {
-				for (File f : fs) {
-					if (f.getName().contains("png"))
-						f.delete();
-				}
-			}
-
-			FileUtils.copyFile(screenShot, new File(picture));
-			++t;
-		} catch (IOException e) {
-			System.out.println("截图失败:" + CaseID);
-			e.printStackTrace();
-		} finally {
-			System.out.println("『发现问题』开始执行: " + "<截图操作,保存目录为[" + picture + "]>");
-		}
-	}
-	
-	/**
-	 * <br>解析xml测试场景配置文件之前，对appium进行配置</br>
+	 * <br>解析xml测试场景配置文件之前，对浏览器进行配置</br>
 	 *
 	 * @param XmlPath
 	 * @return
 	 */
-	public static TestUnit parse(String BrowserName,String XmlPath) {
-		if("火狐浏览器".equals(BrowserName)){
-			System.out.println("初始化火狐浏览器配置，耐心等待启动ing..."); 
-			AppointFirefoxDriver();
-		}else if("谷歌浏览器".equals(BrowserName)){
-			System.out.println("初始化谷歌浏览器配置，耐心等待启动ing..."); 
-			ChromeDriver();
+	public static TestUnit parse(String BrowserName,Boolean profile,String XmlPath) {
+		if("firefox".equals(BrowserName)){
+			if(!profile){
+				System.out.println("初始化火狐浏览器，不加载个人配置信息，耐心等待启动ing..."); 
+//				FirefoxMarionette();//【Selenium3.11.0^ --> Firefox47.0.1】，不加载个人配置，启动最快...
+				FirefoxGeckoDriver(); //【Selenium3.11.0^ --> Firefox72.0.1】，不加载个人配置，启动最快...
+				ThreadDriver.set(driver); // 多线程并发启动浏览器
+			}else{
+				System.out.println("初始化火狐浏览器，加载个人配置信息，耐心等待启动ing..."); 
+//				AppointFirefoxMarionette();//【Selenium3.11.0^ --> Firefox47.0.1】，加载个人配置
+				AppointFirefoxGeckoDriver();// 【Selenium3.11.0^ --> Firefox72.0.1^】，加载个人配置
+				ThreadDriver.set(driver); // 多线程并发启动浏览器
+			}
+		}else if("chrome".equals(BrowserName)){
+			if(!profile){
+				System.out.println("初始化谷歌浏览器，不加载个人配置信息，耐心等待启动ing..."); 
+				ChromeDriver();//【Chromedriver v2.41 --> Chrome v64-66^】，不加载个人配置，启动最快...
+				ThreadDriver.set(driver); // 多线程并发启动浏览器
+			}else{
+				System.out.println("初始化谷歌浏览器，加载个人配置信息，耐心等待启动ing..."); 
+				AppointChromeDriver();//【Chromedriver v2.41 --> Chrome v64-66^】，加载个人配置，启动比较慢...
+				ThreadDriver.set(driver); // 多线程并发启动浏览器
+			}
 		}
 		return parse(new File("src/test/java/TestCaseXml/"+XmlPath));
 	}
@@ -310,11 +366,47 @@ public class WebXmlParseService {
 	}
 	
 	/**
+	 * <br>根据用例的名称，截取图片，进行保存</br>
+	 *
+	 * @param ScreenshotName
+	 */
+	public static void screenShot(String CaseID) {
+
+		int t = 1;
+		String AppointDir = System.getProperty("user.dir")+"\\TestOutput\\ExtentReport\\BugScreenshot\\";
+		String picture = AppointDir + CaseID + ".png";
+
+		File file = new File(AppointDir);
+		File[] fs = file.listFiles();
+		File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+		// 指定图片数量，过多删除
+		try {
+			if (fs.length >= 300) {
+				for (File f : fs) {
+					if (f.getName().contains("png"))
+						f.delete();
+				}
+			}
+
+			FileUtils.copyFile(screenShot, new File(picture));
+			++t;
+		} catch (IOException e) {
+			System.out.println("截图失败:" + CaseID);
+			e.printStackTrace();
+		} finally {
+			System.out.println("『发现问题』开始执行: " + "<截图操作,保存目录为[" + picture + "]>");
+		}
+	}
+	
+	/**
 	 * <br>执行完毕，关闭浏览器</br>
 	 */
 	public static void QuitBrowser() {
 		try {
-			driver.quit();
+//			driver.quit();
+			ThreadDriver.get().quit();
+			ThreadDriver.remove();
 			System.out.println("『测试结束』开始执行: <结束进程，关闭浏览器>");
 		} catch (Exception e) {
 			e.printStackTrace();
