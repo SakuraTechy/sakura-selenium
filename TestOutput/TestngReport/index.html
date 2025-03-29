@@ -178,7 +178,6 @@
   &lt;listeners&gt;
     &lt;listener class-name=&quot;org.uncommons.reportng.HTMLReporter&quot;/&gt;
     &lt;listener class-name=&quot;org.uncommons.reportng.JUnitXMLReporter&quot;/&gt;
-    &lt;listener class-name=&quot;com.sakura.service.ExtentReportGenerateService&quot;/&gt;
   &lt;/listeners&gt;
   &lt;test thread-count=&quot;50&quot; verbose=&quot;3&quot; name=&quot;百度搜索场景测试&quot; time-out=&quot;1&quot;&gt;
     &lt;parameter name=&quot;browser&quot; value=&quot;chrome&quot;/&gt;
@@ -289,16 +288,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'BD_001')
 data.setCell(0, 2, 'BD.V1_0_0.TestCases.BD_SMOKE_001')
-data.setCell(0, 3, 4116);
+data.setCell(0, 3, 3282);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'BD_002')
 data.setCell(1, 2, 'BD.V1_0_0.TestCases.BD_SMOKE_001')
-data.setCell(1, 3, 1778);
+data.setCell(1, 3, 1518);
 window.suiteTableData['百度系统']= { tableData: data, tableDiv: 'times-div-百度系统'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 5 seconds</span>
+              <span class="suite-total-time">Total running time: 4 seconds</span>
               <div id="times-div-百度系统">
               </div> <!-- times-div-百度系统 -->
             </div> <!-- times-div -->
@@ -317,15 +316,15 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">BD_001</span>
-              <div class="reporter-method-output-div">
-                <span class="reporter-method-output">验证打开百度搜索域名，可以正常访问，并进入百度搜索页面</span>
-              </div> <!-- reporter-method-output-div -->
-            </div> <!-- reporter-method-div -->
-            <div class="reporter-method-div">
               <span class="reporter-method-name">BD_002</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output">验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面</span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">BD_001</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output">验证打开百度搜索域名，可以正常访问，并进入百度搜索页面</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -364,15 +363,15 @@ return data;
               </div> <!-- configuration-test before -->
               <div class="test-method">
                 <span class="method-name">BD_001</span>
-                <span class="method-start">15992 ms</span>
+                <span class="method-start">12834 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">BD_002</span>
-                <span class="method-start">20109 ms</span>
+                <span class="method-start">16117 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-test after">
                 <span class="method-name">TearDown</span>
-                <span class="method-start">21887 ms</span>
+                <span class="method-start">17636 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

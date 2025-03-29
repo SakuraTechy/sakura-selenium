@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sakura</groupId>
-	<artifactId>sakura-selenium</artifactId>
+	<artifactId>Sakura-Selenium</artifactId>
 	<version>${revision}</version>
 	<packaging>jar</packaging>
 	<description>Sakura Selenium是一个基于Selenium改造过后的新一代Web自动化测试框架，主要用于Web应用程序的自动化测试，开箱即可使用。</description>
@@ -53,7 +53,7 @@
 			<version>2.53.0</version>
 		</dependency>
 
-		<!-- Appium-->
+		<!-- Appium -->
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>

@@ -8,22 +8,22 @@
       <![CDATA[验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面]]>
     </line>
   </reporter-output>
-  <suite name="Suite" duration-ms="0" started-at="2025-03-26T08:12:47Z" finished-at="2025-03-26T08:12:47Z">
+  <suite name="Suite" duration-ms="0" started-at="2025-03-29T07:41:22Z" finished-at="2025-03-29T07:41:22Z">
     <groups>
     </groups>
   </suite> <!-- Suite -->
-  <suite name="百度系统" duration-ms="87468" started-at="2025-03-26T08:11:19Z" finished-at="2025-03-26T08:12:47Z">
+  <suite name="百度系统" duration-ms="85737" started-at="2025-03-29T07:39:56Z" finished-at="2025-03-29T07:41:22Z">
     <groups>
       <group name="BD_001">
-        <method signature="BD_SMOKE_001.BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_001" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
+        <method signature="BD_SMOKE_001.BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="BD_001" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
       </group> <!-- BD_001 -->
       <group name="BD_002">
-        <method signature="BD_SMOKE_001.BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_002" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
+        <method signature="BD_SMOKE_001.BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="BD_002" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
       </group> <!-- BD_002 -->
     </groups>
-    <test name="百度搜索场景测试" duration-ms="87468" started-at="2025-03-26T08:11:19Z" finished-at="2025-03-26T08:12:47Z">
+    <test name="百度搜索场景测试" duration-ms="85737" started-at="2025-03-29T07:39:56Z" finished-at="2025-03-29T07:41:22Z">
       <class name="BD.V1_0_0.TestCases.BD_SMOKE_001">
-        <test-method status="PASS" signature="setup(java.lang.String, java.lang.Boolean)[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="setup" is-config="true" duration-ms="15985" started-at="2025-03-26T16:11:19Z" finished-at="2025-03-26T16:11:35Z">
+        <test-method status="PASS" signature="setup(java.lang.String, java.lang.Boolean)[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="setup" is-config="true" duration-ms="12828" started-at="2025-03-29T15:39:56Z" finished-at="2025-03-29T15:40:09Z">
           <params>
             <param index="0">
               <value>
@@ -39,21 +39,21 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_001" duration-ms="4116" started-at="2025-03-26T16:11:35Z" finished-at="2025-03-26T16:11:40Z">
+        <test-method status="PASS" signature="BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="BD_001" duration-ms="3282" started-at="2025-03-29T15:40:09Z" finished-at="2025-03-29T15:40:12Z">
           <reporter-output>
             <line>
               <![CDATA[验证打开百度搜索域名，可以正常访问，并进入百度搜索页面]]>
             </line>
           </reporter-output>
         </test-method> <!-- BD_001 -->
-        <test-method status="PASS" signature="BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_002" duration-ms="1778" depends-on-groups="BD_001" started-at="2025-03-26T16:11:40Z" finished-at="2025-03-26T16:11:41Z">
+        <test-method status="PASS" signature="BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="BD_002" duration-ms="1518" depends-on-groups="BD_001" started-at="2025-03-29T15:40:12Z" finished-at="2025-03-29T15:40:14Z">
           <reporter-output>
             <line>
               <![CDATA[验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面]]>
             </line>
           </reporter-output>
         </test-method> <!-- BD_002 -->
-        <test-method status="PASS" signature="TearDown()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="TearDown" is-config="true" duration-ms="65578" started-at="2025-03-26T16:11:41Z" finished-at="2025-03-26T16:12:47Z">
+        <test-method status="PASS" signature="TearDown()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@4643b082]" name="TearDown" is-config="true" duration-ms="68097" started-at="2025-03-29T15:40:14Z" finished-at="2025-03-29T15:41:22Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TearDown -->

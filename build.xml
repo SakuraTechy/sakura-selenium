@@ -48,8 +48,8 @@
 	<!-- target compile -->
 	<target name="compile" depends="init">
 		<javac srcdir="${run.srcpath}" destdir="${run.classpath}"
-			encoding="utf-8" includeantruntime="false" debug="on"
-			debuglevel="lines,vars,source">
+			   encoding="utf-8" includeantruntime="false" debug="on"
+			   debuglevel="lines,vars,source">
 			<classpath refid="path.lib" />
 		</javac>
 		<copy todir="${targetData.dir}">
@@ -58,16 +58,16 @@
 	</target>
 
 	<!-- target test -->
-<!--	<target name="testng" depends="compile">-->
-<!--		&lt;!&ndash;<echo message="${xml.dir}[****testng xml folder****]" /> &ndash;&gt;-->
-<!--		<testng outputdir="${tng.testngReport}"-->
-<!--			classpathref="testng.classpath">-->
-<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
-<!--			<xmlfileset dir="${xml.dir}">-->
-<!--				<include name="${run.xml}" />-->
-<!--			</xmlfileset>-->
-<!--		</testng>-->
-<!--	</target>-->
+	<!--	<target name="testng" depends="compile">-->
+	<!--		&lt;!&ndash;<echo message="${xml.dir}[****testng xml folder****]" /> &ndash;&gt;-->
+	<!--		<testng outputdir="${tng.testngReport}"-->
+	<!--			classpathref="testng.classpath">-->
+	<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
+	<!--			<xmlfileset dir="${xml.dir}">-->
+	<!--				<include name="${run.xml}" />-->
+	<!--			</xmlfileset>-->
+	<!--		</testng>-->
+	<!--	</target>-->
 
 	<target name="testng" depends="compile">
 		<echo message="运行TestNG测试..." />
@@ -78,9 +78,9 @@
 			};
 		 -->
 		<java classname="org.testng.TestNG" classpathref="testng.classpath" fork="false" failonerror="true">
-<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
-<!--			<jvmarg value="-Dlog4j2.component.registry.noJmx=true" />-->
-<!--			<jvmarg value="-Dlog4j2.disable.jmx=true" />-->
+			<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
+			<!--			<jvmarg value="-Dlog4j2.component.registry.noJmx=true" />-->
+			<!--			<jvmarg value="-Dlog4j2.disable.jmx=true" />-->
 			<arg value="${xml.dir}/${run.xml}"/>
 			<arg value="-d" />
 			<arg value="${tng.testngReport}"/>
