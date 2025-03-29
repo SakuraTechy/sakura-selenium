@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="sakura-selenium" />
+        <module name="Sakura-Selenium" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="sakura-selenium" target="1.8" />
       <module name="sakura-selenium" target="1.8" />
     </bytecodeTargetLevel>
   </component>
