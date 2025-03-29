@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="TestNGTest" default="publishReport" basedir=".">
+<project name="TestNGTest" default="testng" basedir=".">
 	<!-- Define <testng> task -->
 	<taskdef name="testng" classname="org.testng.TestNGAntTask">
 		<classpath>
-			<pathelement location="Libs/Tentng/testng-6.9.10.jar"/>
+			<pathelement location="lib/Tentng/testng-6.9.10.jar" />
 		</classpath>
 	</taskdef>
-	<!--end define-->
-	
+	<!--end define -->
+
 	<!-- properties -->
-	<property name="base.dir" value="${basedir}"/>
+	<property name="base.dir" value="${basedir}" />
 	<property name="run.classpath" value="bin" />
-    <property name="run.srcpath" value="src" />
-    <property name="lib.dir" value="target" />
-    <property name="TestData.dir" value="TestData" />
-    <property name="targetData.dir" value="target/TestData" />
-    <property name="xsl.dir" value="Libs/TestReport/TestngReport" />
-	<property name="xml.dir" value="src/test/java/TestReportXml" />
+	<property name="run.srcpath" value="src" />
+	<property name="lib.dir" value="target" />
+	<property name="TestData.dir" value="TestData" />
+	<property name="targetData.dir" value="target/TestData" />
+	<property name="xsl.dir" value="lib/TestReport/TestngReport" />
+	<property name="xml.dir" value="src/test/java/TestRunXml" />
 	<property name="run.xml" value="ExtentReport.xml" />
 	<property name="tng.testngOutput" value="TestOutput" />
 	<property name="tng.testngReport" value="TestOutput/TestngReport" />
 	<property name="tng.publishdir" value="D:\Program\Tomcat\webapps\Appium\TestOutput" />
-	<!--end-->
-	
-	<!-- define jar  -->
+	<!--end -->
+
+	<!-- define jar -->
 	<path id="path.lib">
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
-	
+
 	<!-- path for testng -->
-	<path id="testng.classpath" >
+	<path id="testng.classpath">
 		<path refid="path.lib" />
 		<pathelement location="${run.classpath}" />
 	</path>
@@ -39,50 +39,63 @@
 
 	<!-- target compile -->
 	<target name="init">
-		<!--delete old dir-->
+		<!--delete old dir -->
 		<delete dir="${run.classpath}" />
-		<!--create new dir-->
+		<!--create new dir -->
 		<mkdir dir="${run.classpath}" />
 	</target>
 
 	<!-- target compile -->
 	<target name="compile" depends="init">
-		<javac srcdir="${run.srcpath}" destdir="${run.classpath}" encoding="utf-8" includeantruntime="false" debug="on" debuglevel="lines,vars,source">
+		<javac srcdir="${run.srcpath}" destdir="${run.classpath}"
+			encoding="utf-8" includeantruntime="false" debug="on"
+			debuglevel="lines,vars,source">
 			<classpath refid="path.lib" />
-		</javac>  
-		<copy todir="${targetData.dir}" >
+		</javac>
+		<copy todir="${targetData.dir}">
 			<fileset dir="${TestData.dir}" includes="**/**" />
 		</copy>
 	</target>
 
 	<!-- target test -->
+<!--	<target name="testng" depends="compile">-->
+<!--		&lt;!&ndash;<echo message="${xml.dir}[****testng xml folder****]" /> &ndash;&gt;-->
+<!--		<testng outputdir="${tng.testngReport}"-->
+<!--			classpathref="testng.classpath">-->
+<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
+<!--			<xmlfileset dir="${xml.dir}">-->
+<!--				<include name="${run.xml}" />-->
+<!--			</xmlfileset>-->
+<!--		</testng>-->
+<!--	</target>-->
+
 	<target name="testng" depends="compile">
-		<!--<echo message="${xml.dir}[****testng xml folder****]" />-->
-		<testng outputdir="${tng.testngReport}" classpathref="testng.classpath">
-		    <jvmarg value="-Dfile.encoding=UTF-8"/>   
-			<xmlfileset dir="${xml.dir}">
-				<include name="${run.xml}"/>
-			</xmlfileset>
-		</testng>
+		<echo message="运行TestNG测试..." />
+		<!-- 直接运行TestNG，不使用fork模式，避免命令行长度限制 -->
+		<!-- 在 JAVA_HOME/jre/lib/security/java.polic 添加以下权限
+			grant {
+    			permission javax.management.MBeanTrustPermission "register";
+			};
+		 -->
+		<java classname="org.testng.TestNG" classpathref="testng.classpath" fork="false" failonerror="true">
+<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
+<!--			<jvmarg value="-Dlog4j2.component.registry.noJmx=true" />-->
+<!--			<jvmarg value="-Dlog4j2.disable.jmx=true" />-->
+			<arg value="${xml.dir}/${run.xml}"/>
+			<arg value="-d" />
+			<arg value="${tng.testngReport}"/>
+		</java>
 	</target>
 
-	<target name="transform" depends="testng">
-        <xslt in="${base.dir}/TestOutput/TestngReport/testng-results.xml"
-              style="${xsl.dir}/testng-results.xsl"
-              out="${base.dir}/TestOutput/TestngReport/indexDecorate.html">
-            <param name="testNgXslt.outputDir"
-                   expression="${base.dir}/TestOutput/TestngReport"/>
-            <classpath refid="path.lib"/>
-        </xslt>
-    </target>
-    
+	<!-- target transform -->
+	<!-- <target name="transform" depends="testng"> <xslt in="${base.dir}/TestOutput/TestngReport/testng-results.xml"
+		style="${xsl.dir}/testng-results.xsl" out="${base.dir}/TestOutput/TestngReport/indexDecorate.html">
+		<param name="testNgXslt.outputDir" expression="${base.dir}/TestOutput/TestngReport"/>
+		<classpath refid="path.lib"/> </xslt> </target> -->
+
 	<!-- publish report -->
-	<target name="publishReport" depends="transform">
-		<!-- init the test report folder -->
-		<delete dir="${tng.publishdir}" />
-		<mkdir dir="${tng.publishdir}" />
-		<copy todir="${tng.publishdir}" >
-			<fileset dir="${tng.testngOutput}" includes="**/**" />
-		</copy>
-	</target>
+	<!-- <target name="publishReport" depends="transform"> init the test report
+		folder <delete dir="${tng.publishdir}" /> <mkdir dir="${tng.publishdir}"
+		/> <copy todir="${tng.publishdir}" > <fileset dir="${tng.testngOutput}" includes="**/**"
+		/> </copy> </target> -->
 </project>

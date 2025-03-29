@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="百度系统" configfailurepolicy="continue" parallel="tests" thread-count="1">
+  <test name="百度搜索场景测试" junit="false" verbose="3" parallel="false" thread-count="50" annotations="javadoc" time-out="1" enabled="true" skipfailedinvocationcounts="true" preserve-order="true" allow-return-values="true">
+    <parameter name="browser" value="chrome"/>
+    <parameter name="profile" value="false"/>
+    <classes>
+      <class name="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
+    </classes>
+    <groups>
+      <dependencies>
+        <group depends-on="BD_001" name="BD_002"/>
+      </dependencies>
+    </groups>
+  </test>
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+</suite>

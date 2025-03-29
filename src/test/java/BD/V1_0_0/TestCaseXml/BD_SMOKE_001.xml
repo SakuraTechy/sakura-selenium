@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<unit id="BD_SMOKE_001" name="百度搜索场景测试" version="V1.0.0">
+  <case id="BD_001" name="验证打开百度搜索域名，可以正常访问，并进入百度搜索页面">
+    <step id="1" name="访问百度搜索域名" operationType="浏览器操作" operationName="打开指定网页" action="web-geturls" value="https://www.baidu.com/"/>
+    <step id="2" name="验证是否成功访问百度搜索域名" operationType="检查操作" operationName="检查Web界面元素的文本值" action="web-check" locator="xpath=(//a[contains(text(),'新闻')])[1]" expect="新闻" message="访问失败,左上角未显示新闻(实际结果和预期结果不一致)" skip="true"/>
+  </case>
+  <case id="BD_002" name="验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面">
+    <step id="1" name="输入搜索内容" operationType="输入操作" operationName="输入文本" action="web-input" locator="xpath=(//input[@id='kw'])[1]" value="新闻"/>
+    <step id="2" name="点击百度一下" operationType="点击操作" operationName="元素点击" action="web-click" locator="xpath=(//input[@id='su'])[1]" />
+    <step id="3" name="验证是否搜索成功，并进入对应搜索内容页面" operationType="检查操作" operationName="检查Web界面元素的文本值" action="web-check" locator="xpath=(//em[contains(text(),'新闻')])[1]" expect="新闻" message="搜索失败，页面未找到新闻(实际结果和预期结果不一致)"/>
+  </case>
+</unit>

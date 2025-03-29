@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="4" passed="4">
+<testng-results skipped="0" failed="0" total="2" passed="2">
   <reporter-output>
     <line>
-      <![CDATA[验证在浏览器中，输入百度网站域名后，可以正常访问]]>
+      <![CDATA[验证打开百度搜索域名，可以正常访问，并进入百度搜索页面]]>
     </line>
     <line>
-      <![CDATA[验证在浏览器中，输入百度网站域名后，可以正常访问]]>
-    </line>
-    <line>
-      <![CDATA[验证在百度主界面，搜索栏中输入自动化测试系统，点击回车按钮后，可以正常搜索出对应包含自动化测试系统的信息]]>
-    </line>
-    <line>
-      <![CDATA[验证在百度主界面，搜索栏中输入自动化测试系统，点击回车按钮后，可以正常搜索出对应包含自动化测试系统的信息]]>
+      <![CDATA[验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面]]>
     </line>
   </reporter-output>
-  <suite name="Selenium测试报告" duration-ms="17410" started-at="2020-01-16T07:03:59Z" finished-at="2020-01-16T07:04:17Z">
+  <suite name="Suite" duration-ms="0" started-at="2025-03-26T08:12:47Z" finished-at="2025-03-26T08:12:47Z">
     <groups>
     </groups>
-    <test name="谷歌-搜索自动化测试系统流程" duration-ms="14425" started-at="2020-01-16T07:03:59Z" finished-at="2020-01-16T07:04:14Z">
-      <class name="TestCases.SearchProcess">
-        <test-method status="PASS" signature="stup(java.lang.String, java.lang.Boolean)[pri:0, instance:TestCases.SearchProcess@6b57696f]" name="stup" is-config="true" duration-ms="3961" started-at="2020-01-16T15:03:59Z" finished-at="2020-01-16T15:04:03Z">
+  </suite> <!-- Suite -->
+  <suite name="百度系统" duration-ms="87468" started-at="2025-03-26T08:11:19Z" finished-at="2025-03-26T08:12:47Z">
+    <groups>
+      <group name="BD_001">
+        <method signature="BD_SMOKE_001.BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_001" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
+      </group> <!-- BD_001 -->
+      <group name="BD_002">
+        <method signature="BD_SMOKE_001.BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_002" class="BD.V1_0_0.TestCases.BD_SMOKE_001"/>
+      </group> <!-- BD_002 -->
+    </groups>
+    <test name="百度搜索场景测试" duration-ms="87468" started-at="2025-03-26T08:11:19Z" finished-at="2025-03-26T08:12:47Z">
+      <class name="BD.V1_0_0.TestCases.BD_SMOKE_001">
+        <test-method status="PASS" signature="setup(java.lang.String, java.lang.Boolean)[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="setup" is-config="true" duration-ms="15985" started-at="2025-03-26T16:11:19Z" finished-at="2025-03-26T16:11:35Z">
           <params>
             <param index="0">
               <value>
@@ -34,64 +38,26 @@
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- stup -->
-        <test-method status="PASS" signature="case1()[pri:0, instance:TestCases.SearchProcess@6b57696f]" name="case1" duration-ms="1450" started-at="2020-01-16T15:04:03Z" finished-at="2020-01-16T15:04:05Z">
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="BD_001()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_001" duration-ms="4116" started-at="2025-03-26T16:11:35Z" finished-at="2025-03-26T16:11:40Z">
           <reporter-output>
             <line>
-              <![CDATA[验证在浏览器中，输入百度网站域名后，可以正常访问]]>
+              <![CDATA[验证打开百度搜索域名，可以正常访问，并进入百度搜索页面]]>
             </line>
           </reporter-output>
-        </test-method> <!-- case1 -->
-        <test-method status="PASS" signature="case2()[pri:0, instance:TestCases.SearchProcess@6b57696f]" name="case2" duration-ms="7864" started-at="2020-01-16T15:04:05Z" finished-at="2020-01-16T15:04:13Z">
+        </test-method> <!-- BD_001 -->
+        <test-method status="PASS" signature="BD_002()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="BD_002" duration-ms="1778" depends-on-groups="BD_001" started-at="2025-03-26T16:11:40Z" finished-at="2025-03-26T16:11:41Z">
           <reporter-output>
             <line>
-              <![CDATA[验证在百度主界面，搜索栏中输入自动化测试系统，点击回车按钮后，可以正常搜索出对应包含自动化测试系统的信息]]>
+              <![CDATA[验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面]]>
             </line>
           </reporter-output>
-        </test-method> <!-- case2 -->
-        <test-method status="PASS" signature="TearDown()[pri:0, instance:TestCases.SearchProcess@6b57696f]" name="TearDown" is-config="true" duration-ms="1126" started-at="2020-01-16T15:04:13Z" finished-at="2020-01-16T15:04:14Z">
+        </test-method> <!-- BD_002 -->
+        <test-method status="PASS" signature="TearDown()[pri:0, instance:BD.V1_0_0.TestCases.BD_SMOKE_001@5748c1ac]" name="TearDown" is-config="true" duration-ms="65578" started-at="2025-03-26T16:11:41Z" finished-at="2025-03-26T16:12:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TearDown -->
-      </class> <!-- TestCases.SearchProcess -->
-    </test> <!-- 谷歌-搜索自动化测试系统流程 -->
-    <test name="火狐-搜索自动化测试系统流程" duration-ms="17410" started-at="2020-01-16T07:03:59Z" finished-at="2020-01-16T07:04:17Z">
-      <class name="TestCases.SearchProcess">
-        <test-method status="PASS" signature="stup(java.lang.String, java.lang.Boolean)[pri:0, instance:TestCases.SearchProcess@7b69c6ba]" name="stup" is-config="true" duration-ms="6087" started-at="2020-01-16T15:03:59Z" finished-at="2020-01-16T15:04:05Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[firefox]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[false]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stup -->
-        <test-method status="PASS" signature="case1()[pri:0, instance:TestCases.SearchProcess@7b69c6ba]" name="case1" duration-ms="1340" started-at="2020-01-16T15:04:05Z" finished-at="2020-01-16T15:04:07Z">
-          <reporter-output>
-            <line>
-              <![CDATA[验证在浏览器中，输入百度网站域名后，可以正常访问]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- case1 -->
-        <test-method status="PASS" signature="case2()[pri:0, instance:TestCases.SearchProcess@7b69c6ba]" name="case2" duration-ms="7344" started-at="2020-01-16T15:04:07Z" finished-at="2020-01-16T15:04:14Z">
-          <reporter-output>
-            <line>
-              <![CDATA[验证在百度主界面，搜索栏中输入自动化测试系统，点击回车按钮后，可以正常搜索出对应包含自动化测试系统的信息]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- case2 -->
-        <test-method status="PASS" signature="TearDown()[pri:0, instance:TestCases.SearchProcess@7b69c6ba]" name="TearDown" is-config="true" duration-ms="2631" started-at="2020-01-16T15:04:14Z" finished-at="2020-01-16T15:04:17Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- TearDown -->
-      </class> <!-- TestCases.SearchProcess -->
-    </test> <!-- 火狐-搜索自动化测试系统流程 -->
-  </suite> <!-- Selenium测试报告 -->
+      </class> <!-- BD.V1_0_0.TestCases.BD_SMOKE_001 -->
+    </test> <!-- 百度搜索场景测试 -->
+  </suite> <!-- 百度系统 -->
 </testng-results>

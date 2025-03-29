@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite" verbose="1" preserve-order="true" parallel="tests" thread-count="10">
+    <suite-files>
+        <suite-file path="src/test/java/BD/V1_0_0/TestReportXml/172.18.1.118.xml"/>
+    </suite-files>
+    <listeners>
+        <listener class-name="com.sakura.service.ExtentReportGenerateService"/>
+    </listeners>
+</suite>

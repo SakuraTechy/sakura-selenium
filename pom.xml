@@ -1,244 +1,634 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project 
-  xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>Com.JMoney</groupId>
-  <artifactId>JMoney.Luckeylink.Web.Test</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>com.sakura</groupId>
+	<artifactId>sakura-selenium</artifactId>
+	<version>${revision}</version>
+	<packaging>jar</packaging>
+	<description>Sakura Selenium是一个基于Selenium改造过后的新一代Web自动化测试框架，主要用于Web应用程序的自动化测试，开箱即可使用。</description>
+	<url>https://github.com/SakuraTechy/sakura-selenium</url>
 
-  <name>JMoney.Luckeylink.Web.Test</name>
-  <url>http://maven.apache.org</url>
+	<properties>
+		<!-- 项目版本号 -->
+		<revision>1.0.0-SNAPSHOT</revision>
+		<!-- 文件拷贝时的编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- 编译时的编码 -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+	</properties>
 
-  <properties>
-        <!-- 文件拷贝时的编码 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- 编译时的编码 -->
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    </properties>
-  
-  <dependencies>
-        <!-- Testng  -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.9.10</version>
-        </dependency>
+	<dependencies>
+		<!-- Testng -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.9.10</version>
+		</dependency>
 
-        <!-- Junit  -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
+		<!-- Junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
 
-        <!-- Selenium -->
-        <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.14.0</version>
-        </dependency>
-        <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>3.14.0</version>
-        </dependency>
-        <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server-standalone</artifactId>
-            <version>2.53.0</version>
-        </dependency>
+		<!-- Selenium -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>3.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server-standalone</artifactId>
+			<version>2.53.0</version>
+		</dependency>
 
-        <!-- Java-Client -->
-        <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>3.3.0</version>
-        </dependency>
-        
-        <!-- rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>3.0.5</version>
-        </dependency>
+		<!-- Appium-->
+		<dependency>
+			<groupId>io.appium</groupId>
+			<artifactId>java-client</artifactId>
+			<version>3.3.0</version>
+		</dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>2.0</version>
-        </dependency>
-        
-        <!--jsonschema相关-->
-        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>2.8.0</version>
-        </dependency>
+		<!-- rest-assured -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.5</version>
+		</dependency>
 
-        <!-- ExtentReport -->
-        <dependency>
-            <groupId>com.relevantcodes</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>2.40.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.23</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.3.0</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<!--		<dependency>-->
+		<!--			<groupId>org.json</groupId>-->
+		<!--			<artifactId>json</artifactId>-->
+		<!--			<version>2.0</version>-->
+		<!--		</dependency>-->
 
-        <!-- TestngReport -->
-        <dependency>
-            <groupId>org.uncommons</groupId>
-            <artifactId>reportng</artifactId>
-            <version>1.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <version>8.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.41</version>
+		</dependency>
 
-        <!-- Excel  -->
-        <dependency>
-            <groupId>jexcelapi</groupId>
-            <artifactId>jxl</artifactId>
-            <version>2.6</version>
-        </dependency>
+		<!--jsonschema相关 -->
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>2.8.0</version>
+		</dependency>
 
-        <!-- DataBase-Oracle -->
-        <dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0.2</version>
-        </dependency>
+		<!-- ExtentReport -->
+		<dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>4.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.23</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
 
-        <!-- DataBase-MySql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.44</version>
-        </dependency>
+		<!-- TestngReport -->
+		<dependency>
+			<groupId>org.uncommons</groupId>
+			<artifactId>reportng</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon</artifactId>
+			<version>8.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.54</version>
-        </dependency>
+		<!-- Excel -->
+		<dependency>
+			<groupId>jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6</version>
+		</dependency>
 
-        <!-- Log4j  -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.6.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.6</version>
-        </dependency>
-  </dependencies>
-  
-  <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.java</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-                <!-- 是否替换资源中的属性-->
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/test/java</directory>
-                <includes>
-                    <include>**/*.java</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-                <!--<excludes>  
-                    <exclude>**/*.properties</exclude> 
-                    <exclude>com/test/aboutjar/*</exclude> 
-                </excludes> -->
-                <!-- 是否替换资源中的属性-->
-                <filtering>false</filtering>
-            </resource>
-        </resources>
+		<!-- DataBase-Oracle -->
+		<dependency>
+			<groupId>com.github.noraui</groupId>
+			<artifactId>ojdbc7</artifactId>
+			<version>12.1.0.2</version>
+		</dependency>
+
+		<!-- DataBase-MySql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.44</version>
+		</dependency>
+
+		<!--DataBase-SqlServer -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>10.2.0.jre8</version>
+		</dependency>
+
+		<!-- DataBase-PostgreSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.6.0</version>
+		</dependency>
+
+		<!-- DataBase-Sybase -->
+		<dependency>
+			<groupId>com.sybase</groupId>
+			<artifactId>jconnect</artifactId>
+			<version>16.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/DataBase/sybase-jdbc-jconn4.jar</systemPath>
+		</dependency>
+
+		<!-- DataBase-Hive -->
+		<!-- Hadoop Common -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>3.1.3</version>
+			<exclusions>
+				<!-- 排除所有 SLF4J 绑定 -->
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-reload4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Hive JDBC -->
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-jdbc</artifactId>
+			<version>3.1.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-reload4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Hive Service RPC（关键排除点） -->
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-service-rpc</artifactId>
+			<version>3.1.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-reload4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- DataBase-MariaDB -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+
+		<!-- DataBase-Teradata -->
+		<dependency>
+			<groupId>com.teradata.jdbc</groupId>
+			<artifactId>terajdbc</artifactId>
+			<version>20.00.00.39</version>
+		</dependency>
+
+		<!-- DataBase-KingBase -->
+		<dependency>
+			<groupId>cn.com.kingbase</groupId>
+			<artifactId>kingbase8</artifactId>
+			<version>8.6.1</version>
+		</dependency>
+
+		<!-- DataBase-IRIS -->
+		<dependency>
+			<groupId>com.intersystems</groupId>
+			<artifactId>intersystems-jdbc</artifactId>
+			<version>3.10.3</version>
+		</dependency>
+
+		<!-- DataBase-Informix -->
+		<dependency>
+			<groupId>com.hcl.informix</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>4.50.11</version>
+		</dependency>
+
+		<!-- DataBase-DB2 -->
+		<dependency>
+			<groupId>com.ibm.db2</groupId>
+			<artifactId>jcc</artifactId>
+			<version>12.1.0.0</version>
+		</dependency>
+
+		<!-- DataBase-Cache -->
+		<dependency>
+			<groupId>com.intersys</groupId>
+			<artifactId>cachedb</artifactId>
+			<version>16.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/DataBase/cache-jdbc.jar</systemPath>
+		</dependency>
+
+		<!-- DataBase-Gbase8a -->
+		<dependency>
+			<groupId>com.gbase</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>8.3.81.53</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/DataBase/gbase8a-jdbc.jar</systemPath>
+		</dependency>
+
+		<!-- DataBase-Gbase8s -->
+		<dependency>
+			<groupId>com.gbasedbt</groupId>
+			<artifactId>jdbc</artifactId>
+			<version>3.6.2.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/DataBase/gbase8s-jdbc.jar</systemPath>
+		</dependency>
+
+		<!-- DataBase-TDengine -->
+		<dependency>
+			<groupId>com.taosdata.jdbc</groupId>
+			<artifactId>taos-jdbcdriver</artifactId>
+			<version>3.5.3</version>
+		</dependency>
+
+		<!-- DataBase-HBase -->
+		<!-- Phoenix Core for HBase 1.3 -->
+		<dependency>
+			<groupId>org.apache.phoenix</groupId>
+			<artifactId>phoenix-core</artifactId>
+			<version>4.14.0-HBase-1.3</version>
+			<exclusions>
+				<!-- 排除所有 SLF4J 绑定 -->
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-slf4j-impl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--        &lt;!&ndash; Phoenix QueryServer Client for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.phoenix</groupId>-->
+		<!--            <artifactId>phoenix-queryserver-client</artifactId>-->
+		<!--            <version>4.14.0-HBase-1.3</version>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; HBase Common for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.hbase</groupId>-->
+		<!--            <artifactId>hbase-common</artifactId>-->
+		<!--            <version>1.3.6</version>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; HBase Client for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.hbase</groupId>-->
+		<!--            <artifactId>hbase-client</artifactId>-->
+		<!--            <version>1.3.6</version>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; Hadoop Common for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.hadoop</groupId>-->
+		<!--            <artifactId>hadoop-common</artifactId>-->
+		<!--            <version>2.7.7</version>-->
+		<!--            <exclusions>-->
+		<!--                &lt;!&ndash; 排除所有 SLF4J 绑定 &ndash;&gt;-->
+		<!--                <exclusion>-->
+		<!--                    <groupId>org.slf4j</groupId>-->
+		<!--                    <artifactId>*</artifactId>-->
+		<!--                </exclusion>-->
+		<!--                <exclusion>-->
+		<!--                    <groupId>org.apache.logging.log4j</groupId>-->
+		<!--                    <artifactId>log4j-slf4j-impl</artifactId>-->
+		<!--                </exclusion>-->
+		<!--            </exclusions>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; Hadoop Client for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.hadoop</groupId>-->
+		<!--            <artifactId>hadoop-client</artifactId>-->
+		<!--            <version>2.7.7</version>-->
+		<!--            <exclusions>-->
+		<!--                &lt;!&ndash; 排除所有 SLF4J 绑定 &ndash;&gt;-->
+		<!--                <exclusion>-->
+		<!--                    <groupId>org.slf4j</groupId>-->
+		<!--                    <artifactId>*</artifactId>-->
+		<!--                </exclusion>-->
+		<!--                <exclusion>-->
+		<!--                    <groupId>org.apache.logging.log4j</groupId>-->
+		<!--                    <artifactId>log4j-slf4j-impl</artifactId>-->
+		<!--                </exclusion>-->
+		<!--            </exclusions>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; Hadoop HDFS for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.hadoop</groupId>-->
+		<!--            <artifactId>hadoop-hdfs</artifactId>-->
+		<!--            <version>2.7.7</version>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; Zookeeper for HBase 1.3 &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>org.apache.zookeeper</groupId>-->
+		<!--            <artifactId>zookeeper</artifactId>-->
+		<!--            <version>3.9.3</version>-->
+		<!--        </dependency>-->
+		<!--        &lt;!&ndash; 添加 Google Guava &ndash;&gt;-->
+		<!--        <dependency>-->
+		<!--            <groupId>com.google.guava</groupId>-->
+		<!--            <artifactId>guava</artifactId>-->
+		<!--            <version>32.0.1-android</version>-->
+		<!--        </dependency>-->
+
+		<!-- DataBase-DM -->
+		<dependency>
+			<groupId>com.dameng</groupId>
+			<artifactId>DmJdbcDriver18</artifactId>
+			<version>8.1.2.141</version>
+		</dependency>
+
+		<!-- DataBase-MongoDB -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>4.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>bson</artifactId>
+			<version>4.11.1</version> <!-- 请根据需要选择最新版本 -->
+		</dependency>
+
+		<!-- 连接远程Linux -->
+		<!--		<dependency>-->
+		<!--			<groupId>commons-io</groupId>-->
+		<!--			<artifactId>commons-io</artifactId>-->
+		<!--			<version>2.6</version>-->
+		<!--		</dependency>-->
+
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.54</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/ch.ethz.ganymed/ganymed-ssh2 -->
+		<dependency>
+			<groupId>ch.ethz.ganymed</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>262</version>
+		</dependency>
+
+		<!-- Log4j -->
+
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.10</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacv-platform</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+		<!-- 录屏需要的核心依赖 -->
+		<!-- https://mvnrepository.com/artifact/org.bytedeco.javacpp-presets/ffmpeg-platform -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>ffmpeg-platform</artifactId>
+			<version>6.1.1-1.5.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.obs-websocket.community</groupId>
+			<artifactId>client</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.tyrus.bundles</groupId>
+			<artifactId>tyrus-standalone-client</artifactId>
+			<version>1.17</version>
+		</dependency>
+
+		<!-- 读取文件相关依赖 -->
+		<!-- Apache Commons CSV for reading CSV files -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<!-- Apache POI for reading Excel files -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<!-- For reading text files -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.14.0</version>
+		</dependency>
+
+		<!-- JDBC for potential database dump related operations (very basic setup for Oracle and MySQL here, more config needed in real use) -->
+		<!--		<dependency>-->
+		<!--			<groupId>com.oracle.database.jdbc</groupId>-->
+		<!--			<artifactId>ojdbc8</artifactId>-->
+		<!--			<version>19.3.0.0</version>-->
+		<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>mysql</groupId>-->
+		<!--			<artifactId>mysql-connector-java</artifactId>-->
+		<!--			<version>8.0.33</version>-->
+		<!--		</dependency>-->
+		<!-- For handling DBF files (using a third-party library as example, might need more tuning) -->
+		<!--		<dependency>-->
+		<!--			<groupId>net.sf.jdbf</groupId>-->
+		<!--			<artifactId>jdbf</artifactId>-->
+		<!--			<version>1.0.0</version>-->
+		<!--		</dependency>-->
+		<!-- Placeholder for potential Dicom library, Dicom is complex and needs proper medical imaging library like DCM4CHE etc. -->
+		<!-- <dependency>
+            <groupId>org.dcm4che</groupId>
+            <artifactId>dcm4che-core</artifactId>
+            <version>5.24.1</version>
+        </dependency> -->
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 统一 SLF4J 版本 -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.6.6</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.6.6</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.14.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<!-- 是否替换资源中的属性 -->
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<!--<excludes> <exclude>**/*.properties</exclude> <exclude>com/test/aboutjar/*</exclude>
+					</excludes> -->
+				<!-- 是否替换资源中的属性 -->
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
-		    <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-		    <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-dependencies</id>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        <overWriteReleases>false</overWriteReleases>
-                        <overWriteSnapshots>false</overWriteSnapshots>
-                        <overWriteIfNewer>true</overWriteIfNewer>
-                    </configuration>
-                </execution>
-            </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <classpathPrefix>lib/</classpathPrefix>
-                        <mainClass>TestCases.Main</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-            </plugin>	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>TestCases.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<classpathDependencyExcludes>
+						<!-- 强制排除所有冲突绑定 -->
+						<classpathDependencyExclude>org.slf4j:slf4j-log4j12</classpathDependencyExclude>
+						<classpathDependencyExclude>ch.qos.reload4j:reload4j</classpathDependencyExclude>
+					</classpathDependencyExcludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
