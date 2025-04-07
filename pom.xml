@@ -498,6 +498,22 @@
 			<version>2.14.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.graalvm.sdk</groupId>
+			<artifactId>graal-sdk</artifactId>
+			<version>21.3.0</version> <!-- 请根据需要选择合适的版本 -->
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.js</groupId>
+			<artifactId>js</artifactId>
+			<version>21.3.0</version> <!-- 请根据需要选择合适的版本 -->
+		</dependency>
+		<dependency>
+			<groupId>org.graalvm.js</groupId>
+			<artifactId>js-scriptengine</artifactId>
+			<version>21.3.0</version> <!-- 请根据需要选择合适的版本 -->
+		</dependency>
+
 		<!-- JDBC for potential database dump related operations (very basic setup for Oracle and MySQL here, more config needed in real use) -->
 		<!--		<dependency>-->
 		<!--			<groupId>com.oracle.database.jdbc</groupId>-->

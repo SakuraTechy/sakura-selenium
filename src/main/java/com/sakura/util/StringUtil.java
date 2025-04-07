@@ -14,6 +14,9 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Value;
+
 import org.apache.log4j.Logger;
 
 @SuppressWarnings({ "unused","unchecked", "rawtypes" })
@@ -339,15 +342,15 @@ public class StringUtil {
 
 		String expression = expressionBuilder.toString();
 
-		try {
-			// 使用 ScriptEngine 计算表达式
-			Object result = engine.eval(expression);
+		// 使用 ScriptEngine 计算表达式
+//			Object result = engine.eval(expression);
 
-			// 根据是否有单位返回结果
+		System.setProperty("polyglot.engine.WarnInterpreterOnly", "false");
+		try (Context context = Context.create()) {
+			Value result = context.eval("js", expression);
 			return lastUnit != null ? result.toString() + lastUnit : result.toString();
-		} catch (ScriptException e) {
-			// 处理计算错误
-			return "Error: " + e.getMessage();
+		}catch (Exception e) {
+			throw new Exception("表达式计算失败：" + e.getMessage());
 		}
 	}
 
@@ -686,6 +689,6 @@ public class StringUtil {
 		log.info(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1"));
 		log.info(formatSize(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")));
 		log.info(formatNumber(Double.parseDouble(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")),0,true,true));
-		log.info(CustomRules(calculateAndFormat("52399108+104806400"),1,true,true, true));
+		log.info(CustomRules(calculateAndFormat("74944764+508580"),1,false,false, true));
 	}
 }

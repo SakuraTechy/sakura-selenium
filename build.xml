@@ -58,16 +58,16 @@
 	</target>
 
 	<!-- target test -->
-	<!--	<target name="testng" depends="compile">-->
-	<!--		&lt;!&ndash;<echo message="${xml.dir}[****testng xml folder****]" /> &ndash;&gt;-->
-	<!--		<testng outputdir="${tng.testngReport}"-->
-	<!--			classpathref="testng.classpath">-->
-	<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
-	<!--			<xmlfileset dir="${xml.dir}">-->
-	<!--				<include name="${run.xml}" />-->
-	<!--			</xmlfileset>-->
-	<!--		</testng>-->
-	<!--	</target>-->
+<!--	<target name="testng" depends="compile">-->
+<!--		&lt;!&ndash;<echo message="${xml.dir}[****testng xml folder****]" /> &ndash;&gt;-->
+<!--		<testng outputdir="${tng.testngReport}"-->
+<!--				classpathref="testng.classpath">-->
+<!--			<jvmarg value="-Dfile.encoding=UTF-8" />-->
+<!--			<xmlfileset dir="${xml.dir}">-->
+<!--				<include name="${run.xml}" />-->
+<!--			</xmlfileset>-->
+<!--		</testng>-->
+<!--	</target>-->
 
 	<target name="testng" depends="compile">
 		<echo message="运行TestNG测试..." />

@@ -19,7 +19,6 @@ public class BD_SMOKE_001 {
   @Parameters({"browser","profile"})
   @BeforeTest
   private void setup(String browserName, Boolean profile) throws Exception {
-    System.out.println(this.getClass().getSimpleName());
     TestUnit testunit = WebXmlParseService.parse(browserName,profile,this.getClass().getPackage().getName(),this.getClass().getSimpleName());
     runService = new RunUnitService(testunit);
   }
