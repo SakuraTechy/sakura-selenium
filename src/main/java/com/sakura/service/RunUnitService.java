@@ -356,33 +356,35 @@ public class RunUnitService {
 					
 					String TestReport_UploadResult_API =  ConfigUtil.getProperty("TestReport_UploadResult_API", Constants.CONFIG_APP);
 				    String testReportId =  ConfigUtil.getProperty("testReportId", Constants.CONFIG_APP);
-					ApiUrl = TestReport_UploadResult_API;
-		    		Param = "{\n"
-		    				+ "  \"id\": \""+testReportId+"\",\n"
-		    				+ "  \"statisticAnalysis\": {\n"
-		    				+ "    \"ui\": {\n"
-		    				+ "      \"buildNumber\": "+buildNumber+",\n"
-		    				+ "      \"sceneTotal\": "+sceneTotal+",\n"
-		    				+ "      \"scenePass\": "+scenePass+",\n"
-		    				+ "      \"sceneFail\": "+sceneFail+",\n"
-		    				+ "      \"sceneSkip\": "+sceneSkip+",\n"
-		    				+ "      \"scenePassRate\": \""+scenePassRate+"\",\n"
-		    				+ "      \"caseTotal\": "+caseTotal+",\n"
-		    				+ "      \"casePass\": "+casePass+",\n"
-		    				+ "      \"caseFail\": "+caseFail+",\n"
-		    				+ "      \"caseSkip\": "+caseSkip+",\n"
-		    				+ "      \"casePassRate\": \""+casePassRate+"\",\n"
-		    				+ "      \"stepTotal\": "+stepTotal1+",\n"
-		    				+ "      \"stepPass\": "+stepPass1+",\n"
-		    				+ "      \"stepFail\": "+stepFail1+",\n"
-		    				+ "      \"stepSkip\": "+stepSkip1+",\n"
-		    				+ "      \"stepPassRate\": \""+stepPassRate1+"\",\n"
-		    				+ "      \"durationStartTime\": \""+testReportdurationStartTime+"\",\n"
-		    				+ "      \"durationEndTime\": \""+durationEndTime+"\"\n"
-		    				+ "    }\n"
-		    				+ "  }\n"
-		    				+ "}";
-		    		HttpRequestUtil.SendPut(ApiUrl,Param);
+                    if(StringUtil.isNoEmpty(testReportId)){
+                        ApiUrl = TestReport_UploadResult_API;
+                        Param = "{\n"
+                                + "  \"id\": \""+testReportId+"\",\n"
+                                + "  \"statisticAnalysis\": {\n"
+                                + "    \"ui\": {\n"
+                                + "      \"buildNumber\": "+buildNumber+",\n"
+                                + "      \"sceneTotal\": "+sceneTotal+",\n"
+                                + "      \"scenePass\": "+scenePass+",\n"
+                                + "      \"sceneFail\": "+sceneFail+",\n"
+                                + "      \"sceneSkip\": "+sceneSkip+",\n"
+                                + "      \"scenePassRate\": \""+scenePassRate+"\",\n"
+                                + "      \"caseTotal\": "+caseTotal+",\n"
+                                + "      \"casePass\": "+casePass+",\n"
+                                + "      \"caseFail\": "+caseFail+",\n"
+                                + "      \"caseSkip\": "+caseSkip+",\n"
+                                + "      \"casePassRate\": \""+casePassRate+"\",\n"
+                                + "      \"stepTotal\": "+stepTotal1+",\n"
+                                + "      \"stepPass\": "+stepPass1+",\n"
+                                + "      \"stepFail\": "+stepFail1+",\n"
+                                + "      \"stepSkip\": "+stepSkip1+",\n"
+                                + "      \"stepPassRate\": \""+stepPassRate1+"\",\n"
+                                + "      \"durationStartTime\": \""+testReportdurationStartTime+"\",\n"
+                                + "      \"durationEndTime\": \""+durationEndTime+"\"\n"
+                                + "    }\n"
+                                + "  }\n"
+                                + "}";
+                        HttpRequestUtil.SendPut(ApiUrl,Param);
+                    }
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
