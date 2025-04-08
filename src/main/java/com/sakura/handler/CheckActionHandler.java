@@ -53,9 +53,12 @@ public class CheckActionHandler {
 	//获取元素的文本值
 	public static boolean webCheck(TestStep step) throws Exception{
 	    log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">");
-		step.setType("textToBe");
+		step.setType("visibilityOfElementLocated");
 //		String Actual = SeleniumUtil.getElement(step).getText();
 		String Actual = "";
+//		if(step.getValue().equals("CustomRules")) {
+//			step.setExpect(StringUtil.formatNumber(Double.parseDouble(step.getExpect()), Integer.parseInt(step.getDetails().get("scale")),Boolean.parseBoolean(step.getDetails().get("keepTrailingZeros")),Boolean.parseBoolean(step.getDetails().get("useGrouping"))));
+//		}
 		int maxRetries = Integer.parseInt(Check_Fail); // 最大重试次数
 		int retryCount = 1;
 		while (true) {

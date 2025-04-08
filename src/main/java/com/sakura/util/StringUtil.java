@@ -686,9 +686,13 @@ public class StringUtil {
 //		log.info(calculateAndFormat("3+4"));
 //		log.info(calculateAndFormat("3T+4T"));
 //		log.info(formatDouble(15+1,"#"));
-		log.info(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1"));
-		log.info(formatSize(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")));
-		log.info(formatNumber(Double.parseDouble(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")),0,true,true));
-		log.info(CustomRules(calculateAndFormat("74944764+508580"),1,false,false, true));
+//		log.info(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1"));
+//		log.info(formatSize(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")));
+//		log.info(formatNumber(Double.parseDouble("3285"),0,false,true));
+//		log.info(formatNumber(Double.parseDouble(calculateAndFormat("59+(36-31)*1.6+(40+(36-31))*1")),0,true,true));
+//		log.info(CustomRules(calculateAndFormat("74944764+508580"),1,false,false, true));
+		log.info(replaceAllBlank("大小1：64              块：8          IO 块：4096","(?i)(?<=大小：)[^块]*",""));
+		log.info(replaceAllBlank("保护对象名称${Local_IP}s","(.*?[称])",""));
+		log.info(replaceAllBlank("3,223","[,]",""));
 	}
 }

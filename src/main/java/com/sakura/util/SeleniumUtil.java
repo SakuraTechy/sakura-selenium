@@ -147,6 +147,7 @@ public class SeleniumUtil {
          * visibilityOfElementLocated(By)：判断该元素是否可见（即元素存在且可见）。
          * invisibilityOfElementLocated(By)：判断该元素是否不可见或不存在。
          * elementToBeClickable(By)：判断该元素是否可点击（即元素存在且可见且可点击）。
+         * textToBe(By locator, String str)：检查元素。(精确匹配）。
          * textToBePresentInElementLocated(By, String)：判断指定文本是否出现在元素中。
          * textToBePresentInElementValue(By, String)：判断指定文本是否出现在元素的值属性中。
          * alertIsPresent()：判断是否存在alert弹窗。
