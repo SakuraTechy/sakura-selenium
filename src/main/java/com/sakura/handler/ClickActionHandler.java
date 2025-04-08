@@ -34,6 +34,7 @@ public class ClickActionHandler {
      * @throws Exception
      */
     public static WebElement webClick(TestStep step) throws Exception {
+        step.setSkip("");
         if (StringUtil.isNoEmpty(step.getWaitTime())){
             Thread.sleep(Long.parseLong(step.getWaitTime()));
         }
