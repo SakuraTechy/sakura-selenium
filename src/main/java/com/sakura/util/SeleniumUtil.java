@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import com.sakura.base.TestStep;
@@ -136,7 +137,9 @@ public class SeleniumUtil {
             Thread.sleep(Long.parseLong(step.getWaitTime()));
         }
         WebDriverWait wait = step.getWebDriverWait();
-
+        // 先等页面加载完成
+        wait.until(driver -> ((JavascriptExecutor) driver)
+                .executeScript("return document.readyState").equals("complete"));
         // 判断定义元素是否加载到 DOM
 //		if(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.modal-content"))) != null){
 //			// 等待指定的遮挡元素消失
