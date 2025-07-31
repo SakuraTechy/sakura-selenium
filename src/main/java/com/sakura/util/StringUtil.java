@@ -283,7 +283,7 @@ public class StringUtil {
 //          ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
 //          log.info(jse.eval(str.toString()));
 			
-          ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
+          ScriptEngine jse = new ScriptEngineManager().getEngineByName("graal.js");
           str = jse.eval(SeleniumUtil.parseStringHasEls(script)).toString();
       }
       catch (Exception e){

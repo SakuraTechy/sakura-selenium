@@ -44,7 +44,7 @@ public class DateUtil {
     
     public static String getDateFormat(String DateFormat,String Script) throws ScriptException, Exception {
         SimpleDateFormat Date = new SimpleDateFormat(DateFormat);
-        ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
+        ScriptEngine jse = new ScriptEngineManager().getEngineByName("graal.js");
         int a = (int) jse.eval(SeleniumUtil.parseStringHasEls(Script));
         return Date.format(new Date().getTime()+a*1000);
     }
