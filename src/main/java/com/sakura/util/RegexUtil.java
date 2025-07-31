@@ -1,5 +1,7 @@
 package com.sakura.util;
 
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -228,46 +230,47 @@ public class RegexUtil {
 //        String input_containStr3 = "最后一次登录成功时间=2024-09-24 11:05:02;用户是否可登陆=是;用户名=monitoradmin;租户id=0;";
 //        System.out.println("Matches: " + contains(regex_containStr3, input_containStr3));
 
-        String regex0 = "^(?=.*3133332E3233362E3231382E3937)(?!^3133332E3233362E3231382E3937$).+$";
-        String str0 = "3133332E3233362E3231382E39371";
-        Pattern pattern0 = Pattern.compile(regex0);
-        Matcher matcher0 = pattern0.matcher(str0);
-        System.out.println("Does str1 match? " + matcher0.matches()); // Should be false
-
-        String regex = "^\\[\\{Str=(?=.*3133332E3233362E3231382E3937)(?!.*3133332E3233362E3231382E3937\\}\\]$).+\\}\\]$";
-        String str1 = "[{Str=3133332E3233362E3231382E3937}]";
-        String str2 = "[{Str=3133332E3233362E3231382E3937E2808FE280AAE280AAE280AFE2808FE280AA}]";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher1 = pattern.matcher(str1);
-        Matcher matcher2 = pattern.matcher(str2);
-        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
-        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
-
-        String regex2 = "^\\[\\{\"IP\":\"(?=.*3133332E3233362E3231382E3937)(?!.*3133332E3233362E3231382E3937\"}]$).+}]$";
-        String str3 = "[{\"IP\":\"3133332E3233362E3231382E3937\"}]";
-        String str4 = "[{\"IP\":\"3133332E3233362E3231382E3937E2808FE280AAE280AAE280AFE2808FE280AA\"}]";
-        pattern = Pattern.compile(regex2);
-        matcher1 = pattern.matcher(str3);
-        matcher2 = pattern.matcher(str4);
-        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
-        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
-
-        String regex3 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+}]$";
-        String regex4 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+,\"地址\":\"(?=.*bb)(?!.*bb\"}]$).+}]$";
-        String regex5 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+,\"地址\":\"(?=.*bb)(?!.*bb\",.*$).+,\"姓名\":\"(?=.*cc)(?!.*cc\"}]$).+}]$";
-        String str5 = "[{\"IP\":\"aa\",\"地址\":\"bb\"}]";
-        String str6 = "[{\"IP\":\"aa1\",\"地址\":\"bb1\"}]";
-        String str7 = "[{\"IP\":\"aa\",\"地址\":\"bb\",\"姓名\":\"cc\"}]";
-        String str8 = "[{\"IP\":\"aa1\",\"地址\":\"bb1\",\"姓名\":\"cc1\"}]";
-        pattern = Pattern.compile(regex3);
-        pattern = Pattern.compile(regex4);
-        pattern = Pattern.compile(regex5);
-        matcher1 = pattern.matcher(str5);
-        matcher2 = pattern.matcher(str6);
-        matcher1 = pattern.matcher(str7);
-        matcher2 = pattern.matcher(str8);
-
-        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
-        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
+//        String regex0 = "^(?=.*3133332E3233362E3231382E3937)(?!^3133332E3233362E3231382E3937$).+$";
+//        String str0 = "3133332E3233362E3231382E39371";
+//        Pattern pattern0 = Pattern.compile(regex0);
+//        Matcher matcher0 = pattern0.matcher(str0);
+//        System.out.println("Does str1 match? " + matcher0.matches()); // Should be false
+//
+//        String regex = "^\\[\\{Str=(?=.*3133332E3233362E3231382E3937)(?!.*3133332E3233362E3231382E3937\\}\\]$).+\\}\\]$";
+//        String str1 = "[{Str=3133332E3233362E3231382E3937}]";
+//        String str2 = "[{Str=3133332E3233362E3231382E3937E2808FE280AAE280AAE280AFE2808FE280AA}]";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher1 = pattern.matcher(str1);
+//        Matcher matcher2 = pattern.matcher(str2);
+//        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
+//        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
+//
+//        String regex2 = "^\\[\\{\"IP\":\"(?=.*3133332E3233362E3231382E3937)(?!.*3133332E3233362E3231382E3937\"}]$).+}]$";
+//        String str3 = "[{\"IP\":\"3133332E3233362E3231382E3937\"}]";
+//        String str4 = "[{\"IP\":\"3133332E3233362E3231382E3937E2808FE280AAE280AAE280AFE2808FE280AA\"}]";
+//        pattern = Pattern.compile(regex2);
+//        matcher1 = pattern.matcher(str3);
+//        matcher2 = pattern.matcher(str4);
+//        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
+//        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
+//
+//        String regex3 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+}]$";
+//        String regex4 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+,\"地址\":\"(?=.*bb)(?!.*bb\"}]$).+}]$";
+//        String regex5 = "^\\[\\{\"IP\":\"(?=.*aa)(?!.*aa\",.*$).+,\"地址\":\"(?=.*bb)(?!.*bb\",.*$).+,\"姓名\":\"(?=.*cc)(?!.*cc\"}]$).+}]$";
+//        String str5 = "[{\"IP\":\"aa\",\"地址\":\"bb\"}]";
+//        String str6 = "[{\"IP\":\"aa1\",\"地址\":\"bb1\"}]";
+//        String str7 = "[{\"IP\":\"aa\",\"地址\":\"bb\",\"姓名\":\"cc\"}]";
+//        String str8 = "[{\"IP\":\"aa1\",\"地址\":\"bb1\",\"姓名\":\"cc1\"}]";
+//        pattern = Pattern.compile(regex3);
+//        pattern = Pattern.compile(regex4);
+//        pattern = Pattern.compile(regex5);
+//        matcher1 = pattern.matcher(str5);
+//        matcher2 = pattern.matcher(str6);
+//        matcher1 = pattern.matcher(str7);
+//        matcher2 = pattern.matcher(str8);
+//
+//        System.out.println("Does str1 match? " + matcher1.matches()); // Should be false
+//        System.out.println("Does str2 match? " + matcher2.matches()); // Should be true
+        System.out.println("Matches1: " + matches(".*\\.log$", "sdm-engine_2025-07-31-1.log"));
     }
 }

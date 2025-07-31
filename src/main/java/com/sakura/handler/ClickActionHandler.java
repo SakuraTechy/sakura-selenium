@@ -34,9 +34,6 @@ public class ClickActionHandler {
      * @throws Exception
      */
     public static WebElement webClick(TestStep step) throws Exception {
-        if (StringUtil.isNoEmpty(step.getWaitTime())){
-            Thread.sleep(Long.parseLong(step.getWaitTime()));
-        }
         WebElement webElement = null;
         String test = "";
         int maxRetries = Integer.parseInt(Click_Fail); // 最大重试次数
@@ -95,9 +92,6 @@ public class ClickActionHandler {
     public static WebElement webClicks(TestStep step) throws Exception {
 //        step.setType("");
         WebElement webElement = SeleniumUtil.getElement(step);
-        if (StringUtil.isNoEmpty(step.getWaitTime())){
-            Thread.sleep(Long.parseLong(step.getWaitTime()));
-        }
         String name = step.getName();
         String test = webElement.getText();
         log.info("『正常测试』开始执行: " + "<" + step.getId() + "." + name + ">[" + test + "]");
@@ -278,9 +272,6 @@ public class ClickActionHandler {
         step.setLocator(SeleniumUtil.parseStringHasEls(step.getElement()));
         step.setType("presenceOfElementLocated");
         selectElem = SeleniumUtil.getElement(step);
-        if (StringUtil.isNoEmpty(step.getWaitTime())){
-            Thread.sleep(Long.parseLong(step.getWaitTime()));
-        }
         JavascriptExecutor js= (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true)",selectElem);
         log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">["+ selectElem.getText() +"]");

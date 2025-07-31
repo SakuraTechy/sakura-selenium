@@ -28,9 +28,6 @@ public class InputActionHandler {
      * @throws Exception
      */
     public static void webInput(TestStep step) throws Exception {
-		if (StringUtil.isNoEmpty(step.getWaitTime())){
-			Thread.sleep(Long.parseLong(step.getWaitTime()));
-		}
     	String value = SeleniumUtil.parseStringHasEls(step.getValue());
     	log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">["+ value +"]");
         RunUnitService.Step.put("name", step.getId() + "." + step.getName() + ">["+ value +"]");

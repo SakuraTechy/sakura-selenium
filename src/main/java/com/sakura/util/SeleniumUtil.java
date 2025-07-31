@@ -132,6 +132,9 @@ public class SeleniumUtil {
         if (StringUtil.isNoEmpty(step.getSkip()) && StringUtil.isEqual("locator", step.getSkip())||StringUtil.isEqual("expect", step.getSkip())) {
             step.setWebDriverWait(new WebDriverWait(step.getWebDriver(), 1));
         }
+        if (StringUtil.isNoEmpty(step.getWaitTime())){
+            Thread.sleep(Long.parseLong(step.getWaitTime()));
+        }
         WebDriverWait wait = step.getWebDriverWait();
 
         // 判断定义元素是否加载到 DOM

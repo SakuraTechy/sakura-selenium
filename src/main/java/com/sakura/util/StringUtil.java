@@ -282,7 +282,9 @@ public class StringUtil {
 //          log.info(str.toString());
 //          ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
 //          log.info(jse.eval(str.toString()));
-			
+
+	   	  // jdk1.8.0_301\jre\lib\security\java.policy
+		  // permission javax.management.MBeanTrustPermission "register";
           ScriptEngine jse = new ScriptEngineManager().getEngineByName("graal.js");
           str = jse.eval(SeleniumUtil.parseStringHasEls(script)).toString();
       }
