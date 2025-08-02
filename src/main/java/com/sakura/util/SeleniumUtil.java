@@ -109,9 +109,7 @@ public class SeleniumUtil {
     public static WebElement getElement(TestStep step) throws Exception {
 //		String loc = StringUtil.isNoEmpty(step.getLocator()) ? step.getLocator() : step.getValue();
         String loc = step.getLocator();
-        if (StringUtil.isBlank(loc))
-            throw new Exception("当前步骤未定位到任何控件元素！");
-
+        if (StringUtil.isBlank(loc)) throw new Exception("当前步骤未定位到任何控件元素！");
         int idx1 = loc.indexOf("=");
         String locatename = loc.substring(0, idx1);
         String locatevalue = loc.substring(idx1 + 1);
@@ -255,7 +253,6 @@ public class SeleniumUtil {
                 log.error("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> 元素定位信息异常：【" + locatevalue + "】");
                 RunUnitService.Step.put("name", step.getId() + "." + step.getName() + ">【" + locatevalue + "】");
                 RunUnitService.Step.put("skip", "false");
-                RunUnitService.softAssert.fail("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> 元素定位信息异常：【" + locatevalue + "】");
                 RunUnitService.stepFail++;
             }
             WebXmlParseService.screenShot(RunUnitService.testUnit.getId(), RunUnitService.testCase.getId(), "Step" + step.getId() + "." + step.getName()+"_"+step.getMessage());

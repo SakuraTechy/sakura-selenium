@@ -935,7 +935,7 @@ public class DBHelper {
                 NewDataBase = StringUtil.isNoEmpty(DataBase) ? DataBase : ConfigUtil.getProperty("" + DataName + "_MySql.jdbc.FdataBase", ConstantsUtil.CONFIG_JDBC);
                 USER = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Fusername", ConstantsUtil.CONFIG_JDBC);
                 PASSWORD = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Fpassword", ConstantsUtil.CONFIG_JDBC);
-                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false", USER, PASSWORD);
+                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai", USER, PASSWORD);
                 sm = con.createStatement();
             } else if ("开发环境".equals(DataEnviron)) {
                 URL = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Durl", ConstantsUtil.CONFIG_JDBC);
@@ -943,7 +943,7 @@ public class DBHelper {
                 NewDataBase = StringUtil.isNoEmpty(DataBase) ? DataBase : ConfigUtil.getProperty("" + DataName + "_MySql.jdbc.DdataBase", ConstantsUtil.CONFIG_JDBC);
                 USER = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Dusername", ConstantsUtil.CONFIG_JDBC);
                 PASSWORD = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Dpassword", ConstantsUtil.CONFIG_JDBC);
-                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false", USER, PASSWORD);
+                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai", USER, PASSWORD);
                 sm = con.createStatement();
             } else if ("测试环境".equals(DataEnviron)) {
                 URL = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Turl", ConstantsUtil.CONFIG_JDBC);
@@ -951,7 +951,7 @@ public class DBHelper {
                 NewDataBase = StringUtil.isNoEmpty(DataBase) ? DataBase : ConfigUtil.getProperty("" + DataName + "_MySql.jdbc.TdataBase", ConstantsUtil.CONFIG_JDBC);
                 USER = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Tusername", ConstantsUtil.CONFIG_JDBC);
                 PASSWORD = ConfigUtil.getProperty(""+DataName+"_MySql.jdbc.Tpassword", ConstantsUtil.CONFIG_JDBC);
-                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false", USER, PASSWORD);
+                con = DriverManager.getConnection("jdbc:mysql://"+ URL + ":"+NewPort+"/" + NewDataBase + "?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai", USER, PASSWORD);
                 sm = con.createStatement();
             }
             log.info("数据库连接成功");
@@ -2250,13 +2250,13 @@ public class DBHelper {
 //        sqls1[6] = "UPDATE \"TEST\".\"JDBC\" SET \"name\"='小李' WHERE \"id\"=1";
         try {
 //            Connect_Oracle("测试环境","Oracle","1521", "","bs_audit");
-//        	Connect_MySql("测试环境","MySql","3306", "","bs_audit");
+//        	Connect_MySql("测试环境","MySql","3306", "","bs_audit");hadoop
 //            Connect_SqlServer("测试环境", "SqlServer", "1433","","master");
 //            Connect_DM("测试环境","DM","12345","", "TEST");
 //            Connect_Sybase("测试环境","AAS_DM_Y","5000", "","test");
 //            Connect_Hive("测试环境","AAS_DM_Y","10000","", "default");
-//            query("Oracle","测试环境","AAS_DM_M","1521","sys", "ORCL", Oracle_sql);
-//            List<String> st = query("MySql","测试环境","AAS_DM_Y","3306", "","test", MySql_sql);
+//            query("Oracle","测试环境","AAS_DM_Y","1521","sys", "ORCL", Oracle_sql);
+            List<String> st = query("MySql","测试环境","AAS_DM_Y","3306", "","test", MySql_sql);
 //            List<String> st = query("SqlServer","测试环境","AAS_DM_Y","1433","", "testdb", SqlServer_sql);
 //            List<String> st = query("PostgreSQL","测试环境","AAS_DM_Y","5432","", "postgres", PostgreSQL_sql);
 //            query("Greenplum","测试环境","AAS_DM_Y","5432","", "postgres", Greenplum_sql);
@@ -2276,7 +2276,7 @@ public class DBHelper {
 //            query("Gbase8a","测试环境","AAS_DM_Y","5258","", "test", Gbase8a_sql);
 //            query("Gbase8s","测试环境","AAS_DM_Y","9088","", "test", Gbase8s_sql);
 //            query("TDengine","测试环境","AAS_DM_Y","6041","", "information_schema", TDengine_sql);
-            query("Hbase","测试环境","AAS_DM_Y","2181","", "hbase", Hbase_sql);
+//            query("Hbase","测试环境","AAS_DM_Y","2181","", "hbase", Hbase_sql);
 
 //            List<String> st = query("DM","测试环境","AAS_DM_Y","12345", "TEST", DM7_sql);
 //            List<String> st = query("DM","测试环境","AAS_DM_M","5236", "TEST", DM8_sql);

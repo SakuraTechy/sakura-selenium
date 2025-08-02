@@ -38,6 +38,11 @@ public class ClickActionHandler {
         String test = "";
         int maxRetries = Integer.parseInt(Click_Fail); // 最大重试次数
         int retryCount = 1;
+        String loc = step.getLocator();
+        int idx1 = loc.indexOf("=");
+        String locatename = loc.substring(0, idx1);
+        String locatevalue = loc.substring(idx1 + 1);
+        locatevalue = SeleniumUtil.parseStringHasEls(locatevalue);
         while (true) {
             try {
                 step.setType("elementToBeClickable");
@@ -56,6 +61,7 @@ public class ClickActionHandler {
 //                    log.error("超出最大重试次数，放弃点击");
                         log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
                         RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
+                        RunUnitService.softAssert.fail("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> 元素定位信息异常，并超出最大重试次数：【" + locatevalue + "】");
 //                    throw e; // 超出最大重试次数后抛出异常
                         break;
                     }

@@ -72,6 +72,12 @@ public class InputActionHandler {
 ////			log.error("", e);
 //		}
 
+		String loc = step.getLocator();
+		int idx1 = loc.indexOf("=");
+		String locatename = loc.substring(0, idx1);
+		String locatevalue = loc.substring(idx1 + 1);
+		locatevalue = SeleniumUtil.parseStringHasEls(locatevalue);
+
 		int maxRetries = Integer.parseInt(Click_Fail); // 最大重试次数
 		int retryCount = 1;
 		WebElement webElement = null;
@@ -89,6 +95,7 @@ public class InputActionHandler {
 				if (retryCount > maxRetries) {
 					log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName() +"_元素定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
 					RunUnitService.Step.put("name", step.getId() +"." + step.getName() + "_元素定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
+					RunUnitService.softAssert.fail("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> _元素定位异常导致失败，并超出最大重试次数：【" + locatevalue + "】");
 					break;
 				}
 				retryCount++;
