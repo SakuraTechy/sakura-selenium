@@ -219,7 +219,7 @@ public class CheckActionHandler {
 	}
 
 	// 检查本地list变量
-	public void webCheckset(TestStep step) throws Exception{
+	public void webChecksetlist(TestStep step) throws Exception{
 	    log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">");
 		String Actual = SeleniumUtil.parseStringHasEls(step.getValue());	
 		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
