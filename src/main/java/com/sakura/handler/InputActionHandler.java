@@ -91,14 +91,18 @@ public class InputActionHandler {
 				webElement.sendKeys(value);
 				break;
 			} catch (Exception e) {
-				log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName() + "_元素定位异常导致失败，重新点击>[重试次数:" + retryCount + "]");
-				if (retryCount > maxRetries) {
-					log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName() +"_元素定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
-					RunUnitService.Step.put("name", step.getId() +"." + step.getName() + "_元素定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
-					RunUnitService.softAssert.fail("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> _元素定位异常导致失败，并超出最大重试次数：【" + locatevalue + "】");
+				if (StringUtil.isEqual("locator", step.getSkip())) {
 					break;
+				}else{
+					log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName() + "_元素定位异常导致失败，重新定位>[重试次数:" + retryCount + "]");
+					if (retryCount >= maxRetries) {
+						log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName() +"_元素定位异常导致失败，重新定位>[超出最大重试次数:"+maxRetries+"，放弃点击]");
+						RunUnitService.Step.put("name", step.getId() +"." + step.getName() + "_元素定位异常导致失败，重新定位>[超出最大重试次数:"+maxRetries+"，放弃点击]");
+						RunUnitService.softAssert.fail("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> _元素定位异常导致失败，并超出最大重试次数：【" + locatevalue + "】");
+						break;
+					}
+					retryCount++;
 				}
-				retryCount++;
 			}
 		}
     }

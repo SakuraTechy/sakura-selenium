@@ -57,7 +57,7 @@ public class ClickActionHandler {
                     log.error("点击失败，重试次数: " + retryCount, e);
                     log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName()+"_元素[" + test + "]定位异常导致失败，重新点击>[重试次数:" + retryCount + "]");
 //                RunUnitService.Step.put("name", step.getId() + ".元素[" + test + "]定位异常导致失败，重新点击>[重试次数:" + (retryCount + 1) + "]");
-                    if (retryCount > maxRetries) {
+                    if (retryCount >= maxRetries) {
 //                    log.error("超出最大重试次数，放弃点击");
                         log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
                         RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
@@ -78,7 +78,7 @@ public class ClickActionHandler {
                     break;
                 }else {
                     log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[重试次数:" + retryCount + "]");
-                    if (retryCount > maxRetries) {
+                    if (retryCount >= maxRetries) {
                         log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[超出最大重试次数:"+retryCount+"，放弃点击]");
                         RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[超出最大重试次数:"+retryCount+"，放弃点击]");
                         break;
@@ -115,7 +115,7 @@ public class ClickActionHandler {
                     log.error("点击失败，重试次数: " + retryCount, e);
                     log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName()+"_元素[" + test + "]定位异常导致失败，重新点击>[重试次数:" + retryCount + "]");
 //                RunUnitService.Step.put("name", step.getId() + ".元素[" + test + "]定位异常导致失败，重新点击>[重试次数:" + (retryCount + 1) + "]");
-                    if (retryCount > maxRetries) {
+                    if (retryCount >= maxRetries) {
 //                    log.error("超出最大重试次数，放弃点击");
                         log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
                         RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ "_元素[" + test + "]定位异常导致失败，重新点击>[超出最大重试次数:"+maxRetries+"，放弃点击]");
@@ -135,7 +135,7 @@ public class ClickActionHandler {
                     break;
                 }else {
                     log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[重试次数:" + retryCount + "]");
-                    if (retryCount > maxRetries) {
+                    if (retryCount >= maxRetries) {
                         log.info("『发现问题』执行异常: "+ "<" +step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[超出最大重试次数:"+retryCount+"，放弃点击]");
                         RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ "_元素[" + test + "]未消失导致失败，重新点击>[超出最大重试次数:"+retryCount+"，放弃点击]");
                         break;

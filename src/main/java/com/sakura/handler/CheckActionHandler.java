@@ -69,7 +69,7 @@ public class CheckActionHandler {
 			if(StringUtil.isEmpty(Actual)&&StringUtil.isNoEmpty(step.getExpect())&&StringUtil.isNotEqual(step.getSkip(),"expect")){
 				log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[重试次数:" + retryCount + "]");
 //				RunUnitService.Step.put("name", step.getId() + ".获取元素文本值为空导致失败，重新获取>[重试次数:" + (retryCount + 1) + "]");
-				if (retryCount > maxRetries) {
+				if (retryCount >= maxRetries) {
                     log.info("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:" + maxRetries + "，放弃获取]");
                     RunUnitService.Step.put("name", step.getId() +"." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:"+maxRetries+"，放弃获取]");
                     break;
@@ -121,7 +121,7 @@ public class CheckActionHandler {
 			if(StringUtil.isEmpty(Actual)&&StringUtil.isNoEmpty(step.getExpect())){
 				log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[重试次数:" + retryCount + "]");
 //				RunUnitService.Step.put("name", step.getId() + ".获取元素文本值为空导致失败，重新获取>[重试次数:" + (retryCount + 1) + "]");
-				if (retryCount > maxRetries) {
+				if (retryCount >= maxRetries) {
 					log.info("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:" + maxRetries + "，放弃获取]");
 					RunUnitService.Step.put("name", step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:"+maxRetries+"，放弃获取]");
 					break;
@@ -151,7 +151,7 @@ public class CheckActionHandler {
 			if(StringUtil.isEmpty(Actual)&&StringUtil.isNoEmpty(step.getExpect())){
 				log.info("『发现问题』执行异常: "+ "<" +step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[重试次数:" + retryCount + "]");
 //				RunUnitService.Step.put("name", step.getId() + ".获取元素文本值为空导致失败，重新获取>[重试次数:" + (retryCount + 1) + "]");
-				if (retryCount > maxRetries) {
+				if (retryCount >= maxRetries) {
 					log.info("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:" + maxRetries + "，放弃获取]");
 					RunUnitService.Step.put("name", step.getId() + "." + step.getName()+ ".获取元素文本值为空导致失败，重新获取>[超出最大重试次数:"+maxRetries+"，放弃获取]");
 					break;
