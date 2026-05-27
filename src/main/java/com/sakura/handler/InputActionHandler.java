@@ -28,7 +28,7 @@ public class InputActionHandler {
      * @throws Exception
      */
     public static void webInput(TestStep step) throws Exception {
-    	String value = SeleniumUtil.parseStringHasEls(step.getValue());
+    	String value = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getValue()) : step.getValue();
     	log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">["+ value +"]");
         RunUnitService.Step.put("name", step.getId() + "." + step.getName() + ">["+ value +"]");
 

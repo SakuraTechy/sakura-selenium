@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<unit id="BD_SMOKE_001" name="百度搜索场景测试" version="V1.0.0">
+  <case id="BD_001" name="验证打开百度搜索域名，可以正常访问，并进入百度搜索页面">
+    <step id="1" name="访问数据库安全审计系统域名" operationType="浏览器操作" operationName="打开默认网页" action="web-geturl" value="https://172.19.5.47:443/login"/>
+    <step id="2" name="输入安全管理员用户名" operationType="输入操作" operationName="输入文本" action="web-input" locator="xpath=//input[@id='user_name']" value="secadmin"/>
+    <step id="3" name="输入安全管理员密码" operationType="输入操作" operationName="输入文本" action="web-input" locator="xpath=//input[@id='user_pwd']" value="3edc$RFV"/>
+    <step id="4" name="点击登录" operationType="点击操作" operationName="元素点击" action="web-click" locator="xpath=(//button[contains(text(),'登录')])[1]"/>
+  </case>
+  <case id="BD_002" name="验证在百度搜索页面，输入关键字，点击百度一下按钮，可以正常搜索，并进入搜索结果页面">
+    <step id="3" name="等待5秒" operationType="等待操作" operationName="强制等待" action="wait-forced" value="5000"/>
+    <step id="3" name="获取当前IP地址，用于还原使用" operationType="全局变量操作" operationName="设置值到全局" action="web-set" script="return document.getElementsByClassName(&quot;input-inner inline-input&quot;)[0].value;" details="key:IP1" skip="locator（默认locator，可跳过locator和expect，跳过后会标记为成功）" copyId="4c41a1f0-646c-11ef-86b1-df381878e5c9"/>
+    <step id="4" name="获取当前IP地址前3位，用于设置IP使用" operationType="全局变量操作" operationName="设置值到全局" action="web-set" script="return document.getElementsByClassName(&quot;input-inner inline-input&quot;)[0].value;" regex="\d{1,3}\.\d{1,3}\.\d{1,3}\." details="key:IP2" copyId="4c41a1f0-646c-11ef-86b1-df381878e5c9"/>
+    <step id="5" name="根据当前IP前3位网段，随机生成新的可用IP" operationType="全局变量操作" operationName="获取可用IP设置值到全局" action="web-setusableip" value="${IP2}" details="start:1;end:255;key:IP" copyId="4c41a1f0-646c-11ef-86b1-df381878e5c9"/>
+  </case>
+</unit>

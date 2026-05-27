@@ -53,6 +53,7 @@ public class TestStep extends TestBase{
 	 * Action行为对应所需要传递的参数值 
 	 * <h1>value="5000"</h1>
 	 **/
+	private String parseEls = "true";
     private String value;
     
     private String element;
