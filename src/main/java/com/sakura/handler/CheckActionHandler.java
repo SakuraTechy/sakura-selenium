@@ -89,7 +89,7 @@ public class CheckActionHandler {
 		if(step.getKey()!=null&&step.getKeys()!=null) {
 			Actual = Actual.replace(step.getKey(), step.getKeys());
 		}
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkEqualsWeb(step,Actual,Expected,FailHint,name);
@@ -131,7 +131,7 @@ public class CheckActionHandler {
 				break;
 			}
 		}
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkNotEqualsWeb(step,Actual,Expected,FailHint,name);
@@ -161,7 +161,7 @@ public class CheckActionHandler {
 				break;
 			}
 		}
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkEqualsWeb(step,Actual,Expected,FailHint,name);
@@ -175,7 +175,7 @@ public class CheckActionHandler {
 //		String js2 = "return computeVol();";
 //	    String js3 = "document.querySelector(\"div[class='modal-body scroll-wrap'] div:nth-child(2) div:nth-child(1) button:nth-child(1)\").className";
 		String Actual = (String) ((JavascriptExecutor)step.getWebDriver()).executeScript(step.getValue());  
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkEqualsWeb(step,Actual,Expected,FailHint,name);
@@ -222,7 +222,7 @@ public class CheckActionHandler {
 	public void webChecksetlist(TestStep step) throws Exception{
 	    log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">");
 		String Actual = SeleniumUtil.parseStringHasEls(step.getValue());	
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkEqualsWeb(step,Actual,Expected,FailHint,name);
@@ -232,7 +232,7 @@ public class CheckActionHandler {
 	public void webNotchecksetlist(TestStep step) throws Exception{
 	    log.info("『正常测试』开始执行: " + "<" +step.getId() + "." +step.getName() + ">");
 		String Actual = SeleniumUtil.parseStringHasEls(step.getValue());
-		String Expected = SeleniumUtil.parseStringHasEls(step.getExpect());	
+		String Expected = step.getParseEls().equals("true") ? SeleniumUtil.parseStringHasEls(step.getExpect()) : step.getExpect();
 		String FailHint = "Step"+step.getId()+"."+step.getMessage();
 		String name = step.getId() + "." +step.getName();
 		checkNotEqualsWeb(step,Actual,Expected,FailHint,name);
