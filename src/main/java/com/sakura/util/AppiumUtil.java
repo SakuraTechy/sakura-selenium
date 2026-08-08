@@ -1,6 +1,5 @@
 package com.sakura.util;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,8 @@ public class AppiumUtil {
     /**
      * 用于保存不同步骤之间进行交互的值
      */
-    public static Map<String, Object> localmap = new HashMap<>();
+    // 与 Selenium 共用同一个用例生命周期，但保留 Appium 独立命名空间的历史语义。
+    public static Map<String, Object> localmap = new ExecutionScopedMap("appium");
     static String state = "true";
     
     /**

@@ -3,7 +3,10 @@ package com.sakura.handler;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -11,6 +14,7 @@ import com.sakura.util.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -95,6 +99,81 @@ public class CheckActionHandler {
 		checkEqualsWeb(step,Actual,Expected,FailHint,name);
 
 		return Actual.equals(Expected);
+	}
+
+	/**
+	 * 执行 Admin 统一元素断言。该 action 与历史 web-check 系列隔离，避免改变旧 Jenkins 用例语义。
+	 */
+	public void webAssertElementMatch(TestStep step) throws Exception {
+		log.info("『正常测试』开始执行: " + "<" + step.getId() + "." + step.getName() + ">");
+		String matchMode = normalizeElementMatchMode(step.getMatch_mode());
+		String name = step.getId() + "." + step.getName();
+		String failHint = "Step" + step.getId() + "." + step.getMessage();
+
+		if ("visible".equals(matchMode)) {
+			// 可见性必须使用 Selenium 显式等待，不能用 DOM presence 代替。
+			step.setType("visibilityOfElementLocated");
+			WebElement element = SeleniumUtil.getElement(step);
+			boolean matched = element != null && element.isDisplayed();
+			checkBooleanWeb(step, String.valueOf(matched), "true", failHint + "，期望元素可见", name);
+			return;
+		}
+
+		step.setType("presenceOfElementLocated");
+		WebElement element = SeleniumUtil.getElement(step);
+		String actual = readElementAssertionValue(element, step.getRead_mode());
+		String expected = "true".equals(step.getParseEls())
+			? SeleniumUtil.parseStringHasEls(step.getExpect())
+			: step.getExpect();
+		boolean matched = matchesElementAssertion(actual, expected, matchMode);
+		checkBooleanWeb(step, String.valueOf(matched), "true",
+			failHint + "，匹配方式=" + matchMode + "，实际值【" + actual + "】，期望值【" + expected + "】", name);
+	}
+
+	static String readElementAssertionValue(WebElement element, String rawReadMode) {
+		String readMode = rawReadMode == null ? "auto" : rawReadMode.trim().toLowerCase(Locale.ROOT);
+		String tagName = element.getTagName() == null ? "" : element.getTagName().toLowerCase(Locale.ROOT);
+		boolean valueControl = "input".equals(tagName) || "textarea".equals(tagName) || "select".equals(tagName);
+		if ("value".equals(readMode) || ("auto".equals(readMode) && valueControl)) {
+			String value = element.getAttribute("value");
+			return value == null ? "" : value;
+		}
+		if (!"auto".equals(readMode) && !"text".equals(readMode)) {
+			throw new IllegalArgumentException("统一元素断言读取方式不支持: " + rawReadMode);
+		}
+		String text = element.getText();
+		return text == null ? "" : text;
+	}
+
+	static boolean matchesElementAssertion(String actualValue, String expectedValue, String rawMatchMode) {
+		String actual = actualValue == null ? "" : actualValue;
+		String expected = expectedValue == null ? "" : expectedValue;
+		String matchMode = normalizeElementMatchMode(rawMatchMode);
+		switch (matchMode) {
+			case "contains":
+				return actual.contains(expected);
+			case "equals":
+				return actual.equals(expected);
+			case "not_contains":
+				return !actual.contains(expected);
+			case "regex":
+				try {
+					return Pattern.compile(expected).matcher(actual).find();
+				} catch (PatternSyntaxException e) {
+					throw new IllegalArgumentException("统一元素断言正则表达式不合法: " + expected, e);
+				}
+			default:
+				throw new IllegalArgumentException("统一元素断言匹配方式不支持: " + rawMatchMode);
+		}
+	}
+
+	private static String normalizeElementMatchMode(String rawMatchMode) {
+		String matchMode = rawMatchMode == null ? "contains" : rawMatchMode.trim().toLowerCase(Locale.ROOT);
+		if ("contains".equals(matchMode) || "equals".equals(matchMode) || "not_contains".equals(matchMode)
+			|| "regex".equals(matchMode) || "visible".equals(matchMode)) {
+			return matchMode;
+		}
+		throw new IllegalArgumentException("统一元素断言匹配方式不支持: " + rawMatchMode);
 	}
 
 	/**

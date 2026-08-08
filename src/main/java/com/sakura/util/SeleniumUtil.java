@@ -1,8 +1,6 @@
 package com.sakura.util;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +32,16 @@ public class SeleniumUtil {
     /**
      * 用于保存不同步骤之间进行交互的值
      */
-    public static Map<String, Object> localmap = new LinkedHashMap<>();
+    // 保持旧 Handler 的 Map 调用方式，同时按执行线程隔离变量，避免 Jenkins 并发用例串值。
+    public static Map<String, Object> localmap = new ExecutionScopedMap("selenium");
+
+    public static void beginCaseVariableScope() {
+        ExecutionScopedMap.beginCaseScope();
+    }
+
+    public static void endCaseVariableScope() {
+        ExecutionScopedMap.endCaseScope();
+    }
 
     private static final String WebDriver_Wait = ConfigUtil.getProperty("WebDriver_Wait", ConstantsUtil.CONFIG_COMMON);
 

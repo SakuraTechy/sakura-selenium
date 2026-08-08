@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.sakura.base.StepAction;
+import com.sakura.base.OperationDiagnosticAdapter;
 import com.sakura.base.TestCase;
 import com.sakura.base.TestStep;
 import com.sakura.base.TestUnit;
@@ -148,6 +149,8 @@ public class RunUnitService {
      * @throws Exception
      */
     public void runCase(String id) throws Exception {
+        SeleniumUtil.beginCaseVariableScope();
+        try {
     	log.info("<----------------------------------------【"+ testUnit.getId()+"，"+testUnit.getName() +"】--------------------------------------->");
         softAssert = new SoftAssert();
         Case = new JSONObject(true);
@@ -185,6 +188,7 @@ public class RunUnitService {
 //                Thread.sleep(500);
                 continue;
             } finally {
+				Step = OperationDiagnosticAdapter.attach(step, Step, "selenium");
             	Steps.add(StepIndex - 1, Step);
                 StepIndex++;
             }
@@ -213,6 +217,10 @@ public class RunUnitService {
         casePass = stepSkip>0?casePass+1:casePass;
         TestReportRemarks(testCase.getName());
         softAssert.assertAll();
+        } finally {
+            // 无论断言、浏览器或 Handler 如何退出，都不能让下一条 Jenkins 用例复用本次变量。
+            SeleniumUtil.endCaseVariableScope();
+        }
     }
 
     /**

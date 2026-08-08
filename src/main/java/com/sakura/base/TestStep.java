@@ -55,6 +55,12 @@ public class TestStep extends TestBase{
 	 **/
 	private String parseEls = "true";
     private String value;
+
+	/** 统一元素断言读取方式；保留下划线命名以匹配 Admin 生成的 Jenkins XML 属性。 */
+	private String read_mode;
+
+	/** 统一元素断言匹配方式；旧 XML 不包含该字段，现有 action 行为不受影响。 */
+	private String match_mode;
     
     private String element;
 
@@ -150,6 +156,17 @@ public class TestStep extends TestBase{
 	private String operationType;
 	private String callName;
 	private String callParams;
+
+	/** Admin 冻结的目录身份；旧 Jenkins XML 缺失时由适配器保留 legacy action。 */
+	private String catalogVersion;
+	private String typeCode;
+	private String typeLabel;
+	private String methodCode;
+	private Integer methodVersion;
+	private String methodLabel;
+	private String diagnosticProfile;
+	/** Admin 冻结的 canonical action_type；为空时兼容旧 XML 的 legacy action。 */
+	private String actionType;
 
     /**
      * 文件目录

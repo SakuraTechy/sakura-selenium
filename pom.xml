@@ -134,6 +134,8 @@
 			<groupId>com.github.noraui</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/DataBase/ojdbc7-12.1.0.2.jar</systemPath>
 		</dependency>
 
 		<!-- DataBase-MySql -->
@@ -448,7 +450,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.10</version>
+			<version>1.18.30</version>
 			<scope>provided</scope>
 		</dependency>
 

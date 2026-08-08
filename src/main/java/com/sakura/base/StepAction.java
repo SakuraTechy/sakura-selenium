@@ -104,6 +104,7 @@ public enum StepAction {
     WEB_REGEXCHECKSETLIST("web-regexchecksetlist", "正则检查Web本地缓存的list中的元素", CheckActionHandler.class),
     WEB_FUZZYCHECK("web-fuzzycheck", "模糊检查Web界面元素的内容", CheckActionHandler.class),
     WEB_REGEXCHECK("web-regex-check", "正则检查Web界面元素的内容", CheckActionHandler.class),
+    WEB_ASSERT_ELEMENT_MATCH("web-assert-element-match", "统一检查Web界面元素", CheckActionHandler.class),
     WEB_CHECKPATHFILEBYPATTERNS("web-check-path-file-by-patterns", "检查指定路径下的文件是否匹配模式", CheckActionHandler.class),
     WEB_CHECK_FILE_CONTENT("web-check-file-content", "检查文件内容是否与预期值相等", CheckActionHandler.class),
     ANDROID_CHECK("android-check", "检查Android界面元素值", CheckActionHandler.class),
