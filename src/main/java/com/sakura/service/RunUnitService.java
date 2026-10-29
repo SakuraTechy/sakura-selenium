@@ -37,7 +37,7 @@ public class RunUnitService {
     
     public static TestUnit testUnit;
     public static TestCase testCase; 
-    public static SoftAssert softAssert = new SoftAssert();
+    public static SoftAssert softAssert = new StepAwareSoftAssert();
 
     public static JSONObject Json = new JSONObject(true);
 
@@ -152,7 +152,7 @@ public class RunUnitService {
         SeleniumUtil.beginCaseVariableScope();
         try {
     	log.info("<----------------------------------------【"+ testUnit.getId()+"，"+testUnit.getName() +"】--------------------------------------->");
-        softAssert = new SoftAssert();
+        softAssert = new StepAwareSoftAssert();
         Case = new JSONObject(true);
         Steps = new JSONArray();
         testCase = getCase(id);
@@ -169,6 +169,7 @@ public class RunUnitService {
             if (step.isCancel())
                 continue;
             try {
+                StepAwareSoftAssert.setActiveStep(step);
                 // log.info("开始执行: "+step.toString());
                 StepAction action = step.getAction();
                 // 如果StepAction实例有handler字段，则调用handler中的方法，否则直接调用run方法
@@ -181,6 +182,16 @@ public class RunUnitService {
                     action.run(step);
                 }
             }  catch (Exception e) {
+                if ("true".equalsIgnoreCase(step.getContinueOnFailure())) {
+                    // 统一在执行编排层处理，覆盖数据库、浏览器、文件和自定义操作等所有 Handler。
+                    Step.put("skip", "true");
+                    Step.put("error", e.getMessage() == null ? String.valueOf(e) : e.getMessage());
+                    stepSkip++;
+                    log.warn("步骤失败后按配置跳过并继续执行：" + step.getId() + "." + step.getName(), e);
+                } else {
+                    Step.put("skip", "false");
+                    stepFail++;
+                }
 //                log.info("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + ">");
                 //e.printStackTrace();
 //                log.error("",e);
@@ -188,6 +199,7 @@ public class RunUnitService {
 //                Thread.sleep(500);
                 continue;
             } finally {
+				StepAwareSoftAssert.clearActiveStep();
 				Step = OperationDiagnosticAdapter.attach(step, Step, "selenium");
             	Steps.add(StepIndex - 1, Step);
                 StepIndex++;
@@ -220,6 +232,37 @@ public class RunUnitService {
         } finally {
             // 无论断言、浏览器或 Handler 如何退出，都不能让下一条 Jenkins 用例复用本次变量。
             SeleniumUtil.endCaseVariableScope();
+        }
+    }
+
+    /**
+     * 旧 Handler 使用 SoftAssert 记录失败而不会抛出异常。这里按当前步骤统一拦截，
+     * 使失败跳过覆盖全部操作类型，且不把跳过步骤计入用例最终失败。
+     */
+    private static final class StepAwareSoftAssert extends SoftAssert {
+        private static final ThreadLocal<TestStep> ACTIVE_STEP = new ThreadLocal<>();
+
+        static void setActiveStep(TestStep step) {
+            ACTIVE_STEP.set(step);
+        }
+
+        static void clearActiveStep() {
+            ACTIVE_STEP.remove();
+        }
+
+        @Override
+        public void fail(String message) {
+            TestStep step = ACTIVE_STEP.get();
+            if (step != null && "true".equalsIgnoreCase(step.getContinueOnFailure())) {
+                if (!"true".equalsIgnoreCase(Step.getString("skip"))) {
+                    Step.put("skip", "true");
+                    stepSkip++;
+                }
+                Step.put("error", message);
+                log.warn("步骤失败后按配置跳过并继续执行：" + step.getId() + "." + step.getName());
+                return;
+            }
+            super.fail(message);
         }
     }
 

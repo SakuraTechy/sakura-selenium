@@ -13,6 +13,7 @@ import com.sakura.service.RunUnitService;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Objects;
+import java.util.Locale;
 
 /**
  * <br>
@@ -48,6 +49,13 @@ public class ClickActionHandler {
                 step.setType("elementToBeClickable");
                 webElement = SeleniumUtil.getElement(step);
                 test = webElement.getText();
+                // 配置了状态条件时只允许匹配状态的点击；未配置条件的旧步骤保持原有行为。
+                if (!shouldClick(step, webElement)) {
+                    RunUnitService.Step.put("skip", "true");
+                    RunUnitService.stepSkip++;
+                    log.info("『正常测试』元素状态不满足点击条件，跳过点击: <" + step.getId() + "." + step.getName() + ">[" + test + "]");
+                    return webElement;
+                }
                 webElement.click();
                 break;
             } catch (Exception e) {
@@ -93,6 +101,50 @@ public class ClickActionHandler {
         log.info("『正常测试』开始执行: " + "<" + step.getId() + "." + step.getName() + ">[" + test + "]");
         RunUnitService.Step.put("name", step.getId() + "." + step.getName() + ">[" + test + "]");
         return webElement;
+    }
+
+    private static boolean shouldClick(TestStep step, WebElement element) {
+        String condition = step.getDetails() == null ? "" : step.getDetails().get("click_when");
+        if (condition == null || condition.trim().isEmpty() || "always".equalsIgnoreCase(condition)
+            || "any".equalsIgnoreCase(condition) || "none".equalsIgnoreCase(condition)) {
+            return true;
+        }
+        String expected = condition.trim().toLowerCase(Locale.ROOT);
+        if ("closed".equals(expected) || "unchecked".equals(expected) || "inactive".equals(expected)) expected = "off";
+        if ("opened".equals(expected) || "checked".equals(expected) || "active".equals(expected)) expected = "on";
+        if ("exists".equals(expected) || "present".equals(expected) || "element_present".equals(expected)
+                || "if_exists".equals(expected) || "element_exists".equals(expected)) {
+            String conditionLocator = step.getDetails() == null ? "" : step.getDetails().get("click_condition_locator");
+            if (conditionLocator == null || conditionLocator.trim().isEmpty()) return false;
+            try {
+                // 存在性条件只检查 DOM 是否有元素，不要求条件元素可见。
+                return !step.getWebDriver().findElements(SeleniumUtil.resolveLocator(conditionLocator)).isEmpty();
+            } catch (RuntimeException e) {
+                return false;
+            }
+        }
+        if (!"on".equals(expected) && !"off".equals(expected)) return false;
+        return expected.equals(readElementState(element));
+    }
+
+    private static String readElementState(WebElement element) {
+        for (String attribute : new String[] {"checked", "aria-checked", "aria-pressed", "data-state", "data-checked", "data-on", "data-status"}) {
+            String value = element.getAttribute(attribute);
+            if ("checked".equals(attribute) && value != null) return "on";
+            String state = stateFromValue(value);
+            if (!state.isEmpty()) return state;
+        }
+        String text = element.getText();
+        String state = stateFromValue(text);
+        if (!state.isEmpty()) return state;
+        return stateFromValue(element.getAttribute("class"));
+    }
+
+    private static String stateFromValue(String rawValue) {
+        String value = rawValue == null ? "" : rawValue.trim().toLowerCase(Locale.ROOT);
+        if (value.matches(".*\\b(on|open|opened|active|checked|selected|enabled)\\b.*") || value.matches(".*(开启|打开|已开启|选中|启用).*")) return "on";
+        if (value.matches(".*\\b(off|close|closed|inactive|unchecked|unselected|disabled)\\b.*") || value.matches(".*(关闭|未开启|未选中|禁用).*")) return "off";
+        return "";
     }
 
     public static WebElement webClicks(TestStep step) throws Exception {

@@ -121,13 +121,17 @@ public class CheckActionHandler {
 
 		step.setType("presenceOfElementLocated");
 		WebElement element = SeleniumUtil.getElement(step);
-		String actual = readElementAssertionValue(element, step.getRead_mode());
+		boolean attributeMode = "attribute".equalsIgnoreCase(String.valueOf(step.getRead_mode()).trim());
+		String actual = attributeMode
+			? readElementAttributeValue(element, step.getValue(), (JavascriptExecutor)step.getWebDriver())
+			: readElementAssertionValue(element, step.getRead_mode());
 		String expected = "true".equals(step.getParseEls())
 			? SeleniumUtil.parseStringHasEls(step.getExpect())
 			: step.getExpect();
 		boolean matched = matchesElementAssertion(actual, expected, matchMode);
 		checkBooleanWeb(step, String.valueOf(matched), "true",
-			failHint + "，匹配方式=" + matchMode + "，实际值【" + actual + "】，期望值【" + expected + "】", name);
+			failHint + (attributeMode ? "，属性名=" + step.getValue() : "")
+				+ "，匹配方式=" + matchMode + "，实际值【" + actual + "】，期望值【" + expected + "】", name);
 	}
 
 	static String readElementAssertionValue(WebElement element, String rawReadMode) {
@@ -143,6 +147,19 @@ public class CheckActionHandler {
 		}
 		String text = element.getText();
 		return text == null ? "" : text;
+	}
+
+	static String readElementAttributeValue(WebElement element, String rawAttribute, JavascriptExecutor executor) {
+		String attribute = rawAttribute == null ? "" : rawAttribute.trim();
+		if (attribute.isEmpty() || attribute.matches(".*[\\x00-\\x20\\\"'<>/=].*")) {
+			throw new IllegalArgumentException("统一元素断言属性名不合法或缺少属性名");
+		}
+		// Selenium 3 的 getAttribute 会回退到 DOM property；此处必须读取 HTML 属性原值。
+		Object value = executor.executeScript("return arguments[0].getAttribute(arguments[1]);", element, attribute);
+		if (value == null) {
+			throw new IllegalArgumentException("统一元素断言目标元素不存在属性: " + attribute);
+		}
+		return String.valueOf(value);
 	}
 
 	static boolean matchesElementAssertion(String actualValue, String expectedValue, String rawMatchMode) {

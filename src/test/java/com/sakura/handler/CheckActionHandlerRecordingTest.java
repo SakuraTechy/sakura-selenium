@@ -3,6 +3,7 @@ package com.sakura.handler;
 import java.lang.reflect.Proxy;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -30,6 +31,36 @@ public class CheckActionHandlerRecordingTest {
         Assert.assertEquals(CheckActionHandler.readElementAssertionValue(input, "auto"), "account");
         Assert.assertEquals(CheckActionHandler.readElementAssertionValue(input, "value"), "account");
         Assert.assertEquals(CheckActionHandler.readElementAssertionValue(div, "text"), "系统管理平台");
+    }
+
+    @Test
+    public void attributeModeReadsHtmlAttributeWithoutFallingBackToText() {
+        WebElement div = element("div", "错误文本", "icon-inner  running");
+
+        Assert.assertEquals(CheckActionHandler.readElementAttributeValue(div, "class", attributeExecutor("icon-inner  running")), "icon-inner  running");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = ".*缺少属性名.*")
+    public void attributeModeRequiresAttributeName() {
+        CheckActionHandler.readElementAttributeValue(element("div", "文本", null), " ", attributeExecutor(null));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = ".*不存在属性.*")
+    public void attributeModeRejectsMissingAttribute() {
+        CheckActionHandler.readElementAttributeValue(element("div", "文本", null), "data-status", attributeExecutor(null));
+    }
+
+    @Test
+    public void attributeModeKeepsEmptyAttributeDistinctFromMissing() {
+        Assert.assertEquals(CheckActionHandler.readElementAttributeValue(element("div", "文本", null), "title", attributeExecutor("")), "");
+    }
+
+    private JavascriptExecutor attributeExecutor(String value) {
+        return (JavascriptExecutor)Proxy.newProxyInstance(JavascriptExecutor.class.getClassLoader(),
+            new Class<?>[] {JavascriptExecutor.class}, (proxy, method, args) -> {
+                Assert.assertEquals(args[0], "return arguments[0].getAttribute(arguments[1]);");
+                return value;
+            });
     }
 
     private WebElement element(String tagName, String text, String value) {

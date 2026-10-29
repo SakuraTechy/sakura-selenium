@@ -82,7 +82,10 @@ public class TestStep extends TestBase{
      * 标记用例是否跳过
      * <h1>skip="true"</h1>
      **/
-    private String skip = "";
+	private String skip = "";
+
+	/** 步骤失败后跳过当前步骤并继续执行后续步骤。 */
+	private String continueOnFailure = "false";
 
 	/**
 	 * 模拟Windows键盘按键操作的键值，单个按键

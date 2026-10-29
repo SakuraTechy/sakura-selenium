@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
@@ -46,6 +47,77 @@ public class SeleniumUtil {
     private static final String WebDriver_Wait = ConfigUtil.getProperty("WebDriver_Wait", ConstantsUtil.CONFIG_COMMON);
 
     /**
+     * 统一解析旧 XML 与 Admin 投影的定位器。括号 XPath 必须原样交给 By.xpath，
+     * jQuery、JS Path 和 testRigor 私有语法不能作为普通定位器执行。
+     */
+    public static By resolveLocator(String locator) {
+        LocatorSpec spec = parseLocatorSpec(locator);
+        return by(spec.strategy, spec.value);
+    }
+
+    private static LocatorSpec parseLocatorSpec(String locator) {
+        String normalized = locator == null ? "" : locator.trim();
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("[LOCATOR_NOT_FOUND] 当前步骤未定位到任何控件元素");
+        }
+        if (normalized.startsWith("$(") || normalized.regionMatches(true, 0, "jQuery(", 0, 7)
+                || normalized.regionMatches(true, 0, "document.querySelector(", 0, 23)) {
+            throw new IllegalArgumentException("[LOCATOR_STRATEGY_UNSUPPORTED] 不支持可执行脚本定位器");
+        }
+        boolean rawXpath = normalized.startsWith("/") || normalized.startsWith("(") || normalized.startsWith(".//");
+        if (rawXpath) return new LocatorSpec("xpath", normalized);
+        int delimiter = normalized.indexOf('=');
+        if (delimiter < 0) return new LocatorSpec("cssSelector", normalized);
+        String strategy = normalized.substring(0, delimiter).trim();
+        String value = normalized.substring(delimiter + 1).trim();
+        String lower = strategy.toLowerCase(java.util.Locale.ROOT);
+        if (java.util.Arrays.asList("jquery", "js", "js_path", "jspath", "testrigor").contains(lower)) {
+            throw new IllegalArgumentException("[LOCATOR_STRATEGY_UNSUPPORTED] 不支持的定位策略 " + strategy);
+        }
+        if (value.isEmpty()) {
+            throw new IllegalArgumentException("[LOCATOR_NOT_FOUND] 定位值不能为空");
+        }
+        if ("css".equals(lower) || "cssselector".equals(lower)) strategy = "cssSelector";
+        else if ("tagname".equals(lower)) strategy = "tagName";
+        else if ("classname".equals(lower)) strategy = "className";
+        else if ("linktext".equals(lower)) strategy = "linkText";
+        else if ("partiallinktext".equals(lower)) strategy = "partialLinkText";
+        else if ("xpath".equals(lower) || "id".equals(lower) || "name".equals(lower)) strategy = lower;
+        else throw new IllegalArgumentException("[LOCATOR_STRATEGY_UNSUPPORTED] 不支持的定位策略 " + strategy);
+        return new LocatorSpec(strategy, value);
+    }
+
+    private static By by(String strategy, String value) {
+        switch (strategy) {
+            case "id": return By.id(value);
+            case "name": return By.name(value);
+            case "xpath": return By.xpath(value);
+            case "tagName": return By.tagName(value);
+            case "className": return By.className(value);
+            case "linkText": return By.linkText(value);
+            case "partialLinkText": return By.partialLinkText(value);
+            case "cssSelector": return By.cssSelector(value);
+            default: throw new IllegalArgumentException("[LOCATOR_STRATEGY_UNSUPPORTED] 不支持的定位策略 " + strategy);
+        }
+    }
+
+    private static String locatorFailureCode(Exception error, String strategy) {
+        if (error instanceof InvalidSelectorException && "xpath".equals(strategy)) return "LOCATOR_XPATH_INVALID";
+        if (error instanceof InvalidSelectorException) return "LOCATOR_STRATEGY_UNSUPPORTED";
+        return "LOCATOR_NOT_FOUND";
+    }
+
+    private static final class LocatorSpec {
+        private final String strategy;
+        private final String value;
+
+        private LocatorSpec(String strategy, String value) {
+            this.strategy = strategy;
+            this.value = value;
+        }
+    }
+
+    /**
      * <br>
      * 根据配置取界面上的元素，约定获取界面元素的描述如下：<br/>
      * <h1>属性名=属性值[索引]</h1><br/>
@@ -60,44 +132,7 @@ public class SeleniumUtil {
      */
     public static WebElement getElement1(TestStep step) throws Exception {
         String loc = step.getLocator();
-        if (StringUtil.isBlank(loc))
-            throw new Exception("当前步骤未定位到任何控件元素！");
-
-        int idx1 = loc.indexOf("=");
-        String locatename = loc.substring(0, idx1);
-        String locatevalue = loc.substring(idx1 + 1);
-        // log.info(locatename+" "+locatevalue);
-
-        WebElement webElement = null;
-        switch (locatename) {
-            case "id":
-                webElement = step.getWebDriver().findElement(By.id(locatevalue));
-                break;
-            case "name":
-                webElement = step.getWebDriver().findElement(By.name(locatevalue));
-                break;
-            case "xpath":
-                webElement = step.getWebDriver().findElement(By.xpath(locatevalue));
-                break;
-            case "tagName":
-                webElement = step.getWebDriver().findElement(By.tagName(locatevalue));
-                break;
-            case "className":
-                webElement = step.getWebDriver().findElement(By.className(locatevalue));
-                break;
-            case "linkText":
-                webElement = step.getWebDriver().findElement(By.linkText(locatevalue));
-                break;
-            case "partialLinkText":
-                webElement = step.getWebDriver().findElement(By.partialLinkText(locatevalue));
-                break;
-            case "cssSelector":
-                webElement = step.getWebDriver().findElement(By.cssSelector(locatevalue));
-                break;
-            default:
-                throw new Exception("step元素locator属性配置有误，'='之前必须为id、name和xpath之一！");
-        }
-        return webElement;
+        return step.getWebDriver().findElement(resolveLocator(loc));
     }
 
     /**
@@ -116,16 +151,16 @@ public class SeleniumUtil {
     public static WebElement getElement(TestStep step) throws Exception {
 //		String loc = StringUtil.isNoEmpty(step.getLocator()) ? step.getLocator() : step.getValue();
         String loc = step.getLocator();
-        if (StringUtil.isBlank(loc)) throw new Exception("当前步骤未定位到任何控件元素！");
-        int idx1 = loc.indexOf("=");
-        String locatename = loc.substring(0, idx1);
-        String locatevalue = loc.substring(idx1 + 1);
+        LocatorSpec locatorSpec = parseLocatorSpec(loc);
+        String locatename = locatorSpec.strategy;
+        String locatevalue = locatorSpec.value;
         if (StringUtil.isNoEmpty(step.getScript())){
             String script = StringUtil.formatNumber(Double.parseDouble(StringUtil.calculateAndFormat(step.getScript())), Integer.parseInt(step.getDetails().get("scale")),Boolean.parseBoolean(step.getDetails().get("keepTrailingZeros")),Boolean.parseBoolean(step.getDetails().get("useGrouping")));
             SeleniumUtil.localmap.put(step.getDetails().get("key"), script);
             log.info("『正常测试』开始执行: <成功记录到本地List列表，" + SeleniumUtil.localmap.toString() + ">");
         }
         locatevalue = parseStringHasEls(locatevalue);
+        By resolvedLocator = by(locatename, locatevalue);
         // log.error(locatename+" "+locatevalue+" "+locindex);
         WebElement webElement = null;
         // 创建 WebDriverWait 对象，设置最大等待时间为 60s
@@ -250,6 +285,7 @@ public class SeleniumUtil {
                     throw new Exception("step元素locator属性配置有误，'='之前必须为id、name和xpath之一！");
             }
         } catch (Exception e) {
+            String locatorErrorCode = locatorFailureCode(e, locatename);
 //            log.error(e.getMessage());
             if (StringUtil.isEqual("locator", step.getSkip())) {
                 log.error("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> 【元素定位信息异常，目前已忽略跳过，请仔细检查测试脚本..】");
@@ -257,13 +293,22 @@ public class SeleniumUtil {
                 RunUnitService.Step.put("skip", "true");
                 RunUnitService.stepSkip++;
             }else if (StringUtil.isNotEqual("expect", step.getSkip())) {
-                log.error("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> 元素定位信息异常：【" + locatevalue + "】");
+                log.error("『发现问题』执行异常: " + "<" + step.getId() + "." + step.getName() + "==> [" + locatorErrorCode + "] 元素定位信息异常：【" + locatevalue + "】");
                 RunUnitService.Step.put("name", step.getId() + "." + step.getName() + ">【" + locatevalue + "】");
                 RunUnitService.Step.put("skip", "false");
                 RunUnitService.stepFail++;
             }
             WebXmlParseService.screenShot(RunUnitService.testUnit.getId(), RunUnitService.testCase.getId(), "Step" + step.getId() + "." + step.getName()+"_"+step.getMessage());
             log.error("异常日志：",e);
+            if (e instanceof InvalidSelectorException) {
+                throw new Exception("[" + locatorErrorCode + "] " + e.getMessage(), e);
+            }
+        }
+        if (webElement != null) {
+            int matchedCount = step.getWebDriver().findElements(resolvedLocator).size();
+            if (matchedCount > 1) {
+                log.warn("[LOCATOR_AMBIGUOUS] 定位器命中 " + matchedCount + " 个元素，沿用历史行为选择首个匹配：" + locatevalue);
+            }
         }
         return webElement;
     }
